@@ -1,0 +1,956 @@
+import SwiftUI
+import HomeKit
+
+/// Main content view with tab-based navigation
+///
+/// This view provides the primary navigation structure for the app with enhanced features:
+/// - Home: Overview with favorites and quick access
+/// - Rooms: Grid view of all rooms with search
+/// - Scenes: Grid view and management
+/// - Accessories: Grid view with filtering
+/// - More: Settings, automations, history
+///
+/// **Features**:
+/// - Tab-based navigation optimized for tvOS
+/// - Quick controls panel
+/// - Search and filter
+/// - Pull-to-refresh
+/// - Settings and advanced features
+///
+/// - SeeAlso: `HomeView`, `RoomsView`, `ScenesView`, `AccessoriesView`
+struct ContentView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+    @State private var selectedTab = 0
+    @State private var showingQuickControls = false
+    @State private var showingSettings = false
+
+    var body: some View {
+        ZStack {
+            TabView(selection: $selectedTab) {
+                HomeView(showingQuickControls: $showingQuickControls)
+                    .tabItem {
+                        Label("Home", systemImage: "house.fill")
+                    }
+                    .tag(0)
+
+                RoomsView()
+                    .tabItem {
+                        Label("Rooms", systemImage: "square.grid.2x2.fill")
+                    }
+                    .tag(1)
+
+                ScenesView()
+                    .tabItem {
+                        Label("Scenes", systemImage: "lightbulb.fill")
+                    }
+                    .tag(2)
+
+                AccessoriesView()
+                    .tabItem {
+                        Label("Accessories", systemImage: "apps.iphone")
+                    }
+                    .tag(3)
+
+                MoreView(showingSettings: $showingSettings)
+                    .tabItem {
+                        Label("More", systemImage: "ellipsis.circle.fill")
+                    }
+                    .tag(4)
+            }
+            .overlay(alignment: .bottom) {
+                if !homeManager.statusMessage.isEmpty {
+                    Text(homeManager.statusMessage)
+                        .font(.caption)
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 20)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        .padding(.bottom, 120)
+                }
+            }
+
+            // Quick Controls Overlay
+            if showingQuickControls {
+                QuickControlsPanel(isPresented: $showingQuickControls)
+                    .environmentObject(homeManager)
+            }
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView()
+                .environmentObject(homeManager)
+        }
+    }
+}
+
+/// Home dashboard view showing overview of scenes and rooms
+///
+/// This view displays:
+/// - Loading state with progress indicator
+/// - Authorization prompt if HomeKit not available
+/// - Quick controls button
+/// - Favorite accessories and scenes
+/// - Recent activity
+/// - Home name as title
+/// - Grid of all rooms
+/// - Empty state messaging
+///
+/// **Layout**: Optimized for tvOS with large padding and touch targets
+struct HomeView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+    @Binding var showingQuickControls: Bool
+
+    var favoriteAccessories: [HMAccessory] {
+        homeManager.favoriteAccessories()
+    }
+
+    var favoriteScenes: [HMActionSet] {
+        homeManager.favoriteScenes()
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 40) {
+                if homeManager.isLoading {
+                    VStack(spacing: 30) {
+                        ProgressView()
+                            .scaleEffect(1.5)
+                        Text("Loading HomeKit...")
+                            .font(.title2)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(100)
+                } else if !homeManager.isAuthorized {
+                    VStack(spacing: 30) {
+                        Image(systemName: "homekit")
+                            .font(.system(size: 100))
+                            .foregroundColor(.secondary)
+                        Text("HomeKit Not Available")
+                            .font(.title)
+                        Text("Please set up HomeKit on your iOS device")
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(100)
+                } else {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(homeManager.primaryHome?.name ?? "My Home")
+                                .font(.largeTitle)
+                                .bold()
+                            Text("\(homeManager.accessories.count) accessories")
+                                .font(.title3)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        Button(action: {
+                            showingQuickControls = true
+                        }) {
+                            HStack(spacing: 12) {
+                                Image(systemName: "star.circle.fill")
+                                Text("Quick Controls")
+                            }
+                            .font(.title3)
+                            .padding(.horizontal, 30)
+                            .padding(.vertical, 15)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .padding(.horizontal, 80)
+                    .padding(.top, 60)
+
+                    // Widget Dashboard - TODO: Add to Xcode project
+                    // WidgetDashboard()
+                    //     .environmentObject(homeManager)
+
+                    // Home Status Dashboard
+                    HomeDashboardStatusView()
+                        .environmentObject(homeManager)
+                        .padding(.horizontal, 80)
+
+                    // Favorite Accessories
+                    if !favoriteAccessories.isEmpty {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Favorite Accessories")
+                                .font(.title2)
+                                .padding(.horizontal, 80)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 30) {
+                                    ForEach(favoriteAccessories.prefix(6), id: \.uniqueIdentifier) { accessory in
+                                        AccessoryCard(accessory: accessory)
+                                    }
+                                }
+                                .padding(.horizontal, 80)
+                            }
+                        }
+                    }
+
+                    // Favorite Scenes
+                    if !favoriteScenes.isEmpty {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Favorite Scenes")
+                                .font(.title2)
+                                .padding(.horizontal, 80)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 30) {
+                                    ForEach(favoriteScenes.prefix(6), id: \.uniqueIdentifier) { scene in
+                                        SceneCard(scene: scene)
+                                    }
+                                }
+                                .padding(.horizontal, 80)
+                            }
+                        }
+                    }
+
+                    if !homeManager.scenes.isEmpty && favoriteScenes.isEmpty {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Scenes")
+                                .font(.title2)
+                                .padding(.horizontal, 80)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 40) {
+                                    ForEach(homeManager.scenes.prefix(6), id: \.uniqueIdentifier) { scene in
+                                        SceneCard(scene: scene)
+                                    }
+                                }
+                                .padding(.horizontal, 80)
+                            }
+                        }
+                    }
+
+                    if !homeManager.rooms.isEmpty {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Rooms")
+                                .font(.title2)
+                                .padding(.horizontal, 80)
+
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 400), spacing: 40)], spacing: 40) {
+                                ForEach(homeManager.rooms, id: \.uniqueIdentifier) { room in
+                                    RoomCard(room: room)
+                                }
+                            }
+                            .padding(.horizontal, 80)
+                        }
+                    }
+
+                    if homeManager.accessories.isEmpty && homeManager.scenes.isEmpty {
+                        VStack(spacing: 30) {
+                            Image(systemName: "homekit")
+                                .font(.system(size: 100))
+                                .foregroundColor(.secondary)
+                            Text("No Accessories Found")
+                                .font(.title)
+                            Text("Add accessories using the Home app on iOS")
+                                .font(.title3)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(100)
+                    }
+                }
+            }
+            .padding(.bottom, 60)
+        }
+    }
+}
+
+/// Rooms tab view showing all rooms in a grid
+///
+/// Displays a grid of room cards with navigation to room detail views.
+///
+/// **Features**:
+/// - Adaptive grid layout
+/// - Navigation to `RoomDetailView` on selection
+/// - Empty state for when no rooms exist
+///
+/// **Layout**: Grid with 400pt minimum column width
+struct RoomsView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 40) {
+                    Text("Rooms")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.horizontal, 80)
+                        .padding(.top, 60)
+
+                    if homeManager.rooms.isEmpty {
+                        VStack(spacing: 30) {
+                            Image(systemName: "square.grid.2x2")
+                                .font(.system(size: 100))
+                                .foregroundColor(.secondary)
+                            Text("No Rooms")
+                                .font(.title)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(100)
+                    } else {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 400), spacing: 40)], spacing: 40) {
+                            ForEach(homeManager.rooms, id: \.uniqueIdentifier) { room in
+                                NavigationLink(destination: RoomDetailView(room: room)) {
+                                    RoomCard(room: room)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal, 80)
+                    }
+                }
+                .padding(.bottom, 60)
+            }
+        }
+    }
+}
+
+/// Scenes tab view showing all HomeKit scenes
+///
+/// Displays a grid of scene cards that can be tapped to execute.
+///
+/// **Features**:
+/// - Adaptive grid layout
+/// - Direct scene execution on tap
+/// - Empty state with instructions
+///
+/// **Layout**: Grid with 400pt minimum column width
+struct ScenesView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 40) {
+                Text("Scenes")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.horizontal, 80)
+                    .padding(.top, 60)
+
+                if homeManager.scenes.isEmpty {
+                    VStack(spacing: 30) {
+                        Image(systemName: "lightbulb")
+                            .font(.system(size: 100))
+                            .foregroundColor(.secondary)
+                        Text("No Scenes")
+                            .font(.title)
+                        Text("Create scenes in the Home app on iOS")
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(100)
+                } else {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 400), spacing: 40)], spacing: 40) {
+                        ForEach(homeManager.scenes, id: \.uniqueIdentifier) { scene in
+                            SceneCard(scene: scene)
+                        }
+                    }
+                    .padding(.horizontal, 80)
+                }
+            }
+            .padding(.bottom, 60)
+        }
+    }
+}
+
+/// Accessories tab view showing all HomeKit accessories
+///
+/// Displays a grid of all accessories with navigation to detail views.
+///
+/// **Features**:
+/// - Adaptive grid layout
+/// - Navigation to `AccessoryDetailView` on selection
+/// - Empty state messaging
+///
+/// **Layout**: Grid with 400pt minimum column width
+struct AccessoriesView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 40) {
+                    Text("All Accessories")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.horizontal, 80)
+                        .padding(.top, 60)
+
+                    if homeManager.accessories.isEmpty {
+                        VStack(spacing: 30) {
+                            Image(systemName: "apps.iphone")
+                                .font(.system(size: 100))
+                                .foregroundColor(.secondary)
+                            Text("No Accessories")
+                                .font(.title)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(100)
+                    } else {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 400), spacing: 40)], spacing: 40) {
+                            ForEach(homeManager.accessories, id: \.uniqueIdentifier) { accessory in
+                                NavigationLink(destination: AccessoryDetailView(accessory: accessory)) {
+                                    AccessoryCard(accessory: accessory)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal, 80)
+                    }
+                }
+                .padding(.bottom, 60)
+            }
+        }
+    }
+}
+
+/// More menu view with advanced features
+///
+/// Provides navigation to:
+/// - Settings
+/// - Activity History
+/// - Automation Management
+/// - Scene Management
+/// - Energy Dashboard
+/// - Notification Center
+/// - Routines
+/// - Zones
+/// - Diagnostics
+/// - Hub Status
+struct MoreView: View {
+    @EnvironmentObject var homeManager: HomeKitManager
+    @Binding var showingSettings: Bool
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 40) {
+                    Text("More")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.horizontal, 80)
+                        .padding(.top, 60)
+
+                    // Core Features Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Core Features")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Settings
+                            Button(action: {
+                                showingSettings = true
+                            }) {
+                                MoreMenuItem(
+                                    title: "Settings",
+                                    icon: "gearshape.fill",
+                                    description: "Preferences and configuration",
+                                    color: .blue
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Activity History
+                            NavigationLink(destination: ActivityHistoryView()) {
+                                MoreMenuItem(
+                                    title: "Activity History",
+                                    icon: "clock.arrow.circlepath",
+                                    description: "View recent actions",
+                                    color: .green
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Automations
+                            NavigationLink(destination: AutomationView()) {
+                                MoreMenuItem(
+                                    title: "Automations",
+                                    icon: "gearshape.2.fill",
+                                    description: "Manage automations",
+                                    color: .orange
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Scene Management
+                            NavigationLink(destination: SceneManagementView()) {
+                                MoreMenuItem(
+                                    title: "Scene Management",
+                                    icon: "sparkles",
+                                    description: "Create and edit scenes",
+                                    color: .purple
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Smart Features Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Smart Features")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Cameras NEW
+                            NavigationLink(destination: CameraView()) {
+                                MoreMenuItem(
+                                    title: "Cameras",
+                                    icon: "video.fill",
+                                    description: "View security cameras",
+                                    color: .blue
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Multi-Room Audio NEW
+                            NavigationLink(destination: MultiRoomAudioView()) {
+                                MoreMenuItem(
+                                    title: "Multi-Room Audio",
+                                    icon: "hifispeaker.2.fill",
+                                    description: "Control HomePod speakers",
+                                    color: .purple
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Insights NEW
+                            NavigationLink(destination: InsightsView()) {
+                                MoreMenuItem(
+                                    title: "Insights",
+                                    icon: "chart.line.uptrend.xyaxis",
+                                    description: "Smart suggestions & patterns",
+                                    color: .cyan
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Energy Dashboard
+                            NavigationLink(destination: EnergyDashboardView()) {
+                                MoreMenuItem(
+                                    title: "Energy Dashboard",
+                                    icon: "bolt.fill",
+                                    description: "Monitor energy consumption",
+                                    color: .yellow
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Voice Control NEW - Models created, add to Xcode project to enable
+                            // NavigationLink(destination: VoiceControlView()) {
+                            //     MoreMenuItem(
+                            //         title: "Voice Control",
+                            //         icon: "mic.fill",
+                            //         description: "Siri shortcuts and voice commands",
+                            //         color: .purple
+                            //     )
+                            // }
+                            // .buttonStyle(.plain)
+
+                            // AI Assistant NEW - Models created, add to Xcode project to enable
+                            // NavigationLink(destination: AIAssistantView()) {
+                            //     MoreMenuItem(
+                            //         title: "AI Assistant",
+                            //         icon: "brain",
+                            //         description: "Natural language home control",
+                            //         color: .pink
+                            //     )
+                            // }
+                            // .buttonStyle(.plain)
+
+                            // Automation Marketplace NEW - Models created, add to Xcode project to enable
+                            // NavigationLink(destination: AutomationMarketplaceView()) {
+                            //     MoreMenuItem(
+                            //         title: "Automation Marketplace",
+                            //         icon: "square.grid.3x3.fill",
+                            //         description: "Download community automations",
+                            //         color: .indigo
+                            //     )
+                            // }
+                            // .buttonStyle(.plain)
+
+                            // Camera Grid NEW - Models created, add to Xcode project to enable
+                            // NavigationLink(destination: CameraGridView()) {
+                            //     MoreMenuItem(
+                            //         title: "Camera Grid",
+                            //         icon: "video.square.fill",
+                            //         description: "Multi-camera view",
+                            //         color: .cyan
+                            //     )
+                            // }
+                            // .buttonStyle(.plain)
+
+                            // Notification Center
+                            NavigationLink(destination: NotificationCenterView()) {
+                                MoreMenuItem(
+                                    title: "Notification Center",
+                                    icon: "bell.fill",
+                                    description: "View and manage alerts",
+                                    color: .red
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Routines
+                            NavigationLink(destination: RoutinesView()) {
+                                MoreMenuItem(
+                                    title: "Routines",
+                                    icon: "sparkles",
+                                    description: "Multi-step automations",
+                                    color: .purple
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Zones
+                            NavigationLink(destination: ZonesView()) {
+                                MoreMenuItem(
+                                    title: "Zones",
+                                    icon: "square.grid.2x2.fill",
+                                    description: "Group rooms into zones",
+                                    color: .cyan
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Automation Builder NEW
+                            NavigationLink(destination: AutomationBuilderView()) {
+                                MoreMenuItem(
+                                    title: "Automation Builder",
+                                    icon: "flowchart.fill",
+                                    description: "Build custom automations",
+                                    color: .pink
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Organization & Management Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Organization & Management")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Service Groups NEW
+                            NavigationLink(destination: ServiceGroupsView()) {
+                                MoreMenuItem(
+                                    title: "Service Groups",
+                                    icon: "square.stack.3d.up.fill",
+                                    description: "Custom accessory grouping",
+                                    color: .indigo
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Floor Plan NEW
+                            NavigationLink(destination: FloorPlanView()) {
+                                MoreMenuItem(
+                                    title: "Floor Plan",
+                                    icon: "map.fill",
+                                    description: "3D accessory placement",
+                                    color: .teal
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Home Sharing NEW
+                            NavigationLink(destination: HomeSharingView()) {
+                                MoreMenuItem(
+                                    title: "Home Sharing",
+                                    icon: "person.2.fill",
+                                    description: "Manage users and permissions",
+                                    color: .blue
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Backup & Export NEW
+                            NavigationLink(destination: BackupView()) {
+                                MoreMenuItem(
+                                    title: "Backup & Export",
+                                    icon: "archivebox.fill",
+                                    description: "Export configuration to JSON",
+                                    color: .green
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Advanced Features Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Advanced Features")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Custom Characteristics NEW
+                            NavigationLink(destination: CustomCharacteristicsView()) {
+                                MoreMenuItem(
+                                    title: "Custom Characteristics",
+                                    icon: "hammer.fill",
+                                    description: "Advanced device control",
+                                    color: .orange
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Integration Hub NEW
+                            NavigationLink(destination: IntegrationHubView()) {
+                                MoreMenuItem(
+                                    title: "Integration Hub",
+                                    icon: "network",
+                                    description: "Weather, calendar, webhooks",
+                                    color: .purple
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Siri Shortcuts NEW
+                            NavigationLink(destination: SiriShortcutsView()) {
+                                MoreMenuItem(
+                                    title: "Siri Shortcuts",
+                                    icon: "waveform",
+                                    description: "Voice command setup",
+                                    color: .pink
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Family Controls NEW
+                            NavigationLink(destination: FamilyControlsView()) {
+                                MoreMenuItem(
+                                    title: "Family Controls",
+                                    icon: "figure.and.child.holdinghands",
+                                    description: "Kid mode & bedtime schedule",
+                                    color: .green
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Modes & Profiles Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Modes & Profiles")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Vacation Mode NEW
+                            NavigationLink(destination: VacationModeView()) {
+                                MoreMenuItem(
+                                    title: "Vacation Mode",
+                                    icon: "airplane",
+                                    description: "Presence simulation & security",
+                                    color: .orange
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Gaming Mode NEW
+                            NavigationLink(destination: GamingModeView()) {
+                                MoreMenuItem(
+                                    title: "Gaming Mode",
+                                    icon: "gamecontroller.fill",
+                                    description: "Optimize for gaming",
+                                    color: .red
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Adaptive Lighting NEW
+                            NavigationLink(destination: AdaptiveLightingView()) {
+                                MoreMenuItem(
+                                    title: "Adaptive Lighting",
+                                    icon: "sun.and.horizon.fill",
+                                    description: "Circadian rhythm lighting",
+                                    color: .yellow
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Entertainment Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Entertainment")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Apple TV Remote NEW
+                            NavigationLink(destination: AppleTVRemoteView()) {
+                                MoreMenuItem(
+                                    title: "Apple TV Remote",
+                                    icon: "appletv.fill",
+                                    description: "Built-in remote control",
+                                    color: .black
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Now Playing NEW (uses existing NowPlayingView from AppleTVRemoteView.swift)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // Diagnostics Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Diagnostics & Monitoring")
+                            .font(.title2)
+                            .bold()
+                            .padding(.horizontal, 80)
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 500), spacing: 40)], spacing: 40) {
+                            // Thread Network NEW
+                            NavigationLink(destination: ThreadNetworkView()) {
+                                MoreMenuItem(
+                                    title: "Network Topology",
+                                    icon: "network",
+                                    description: "Thread & Matter visualization",
+                                    color: .blue
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Accessory Diagnostics
+                            NavigationLink(destination: AccessoryDiagnosticsView()) {
+                                MoreMenuItem(
+                                    title: "Accessory Diagnostics",
+                                    icon: "stethoscope",
+                                    description: "Health and troubleshooting",
+                                    color: .pink
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            // Hub Status
+                            NavigationLink(destination: HubStatusView()) {
+                                MoreMenuItem(
+                                    title: "Hub Status",
+                                    icon: "appletv.fill",
+                                    description: "Monitor hub connectivity",
+                                    color: .indigo
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.horizontal, 80)
+                    }
+
+                    // App Info
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("About HomeKitTV")
+                            .font(.title2)
+                            .padding(.horizontal, 80)
+
+                        VStack(alignment: .leading, spacing: 15) {
+                            HStack {
+                                Text("Version")
+                                    .font(.title3)
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                Text("2.0.0")
+                                    .font(.title3)
+                            }
+
+                            Divider()
+
+                            HStack {
+                                Text("Connected Home")
+                                    .font(.title3)
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                Text(homeManager.primaryHome?.name ?? "None")
+                                    .font(.title3)
+                            }
+
+                            Divider()
+
+                            HStack {
+                                Text("Total Accessories")
+                                    .font(.title3)
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                                Text("\(homeManager.accessories.count)")
+                                    .font(.title3)
+                            }
+                        }
+                        .padding(30)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(20)
+                        .padding(.horizontal, 80)
+                    }
+                }
+                .padding(.bottom, 60)
+            }
+        }
+    }
+}
+
+/// Menu item card for More view
+struct MoreMenuItem: View {
+    let title: String
+    let icon: String
+    let description: String
+    let color: Color
+
+    var body: some View {
+        HStack(spacing: 25) {
+            Image(systemName: icon)
+                .font(.system(size: 50))
+                .foregroundColor(color)
+                .frame(width: 80)
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(title)
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.primary)
+
+                Text(description)
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 30))
+                .foregroundColor(.secondary)
+        }
+        .padding(30)
+        .background(color.opacity(0.1))
+        .cornerRadius(20)
+    }
+}
+
+#Preview {
+    ContentView()
+        .environmentObject(HomeKitManager())
+}

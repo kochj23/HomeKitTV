@@ -1,0 +1,519 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F6FC11595934060AA9F63D9 /* SelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACC763BF46692F935C96A1 /* SelectionManager.swift */; };
+		8F63F7D7693758E921BEB8C6 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8794051533F2AB22AFF39 /* FontExtensions.swift */; };
+		B1F87346A4DF30512441F753 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76674B516AD41F6A133E3D8C /* HelpView.swift */; };
+		BB0000010000000000000001 /* HomeKitTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000020000000000000001 /* HomeKitTVApp.swift */; };
+		BB0000030000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000040000000000000001 /* ContentView.swift */; };
+		BB0000050000000000000001 /* HomeKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000060000000000000001 /* HomeKitManager.swift */; };
+		BB0000070000000000000001 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000080000000000000001 /* Cards.swift */; };
+		BB0000090000000000000001 /* DetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000100000000000000001 /* DetailViews.swift */; };
+		D0279BD72EBBD4E30081AD69 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BD42EBBD4E30081AD69 /* Settings.swift */; };
+		D0279BDE2EBBD4F20081AD69 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BDD2EBBD4F20081AD69 /* SettingsView.swift */; };
+		D0279BDF2EBBD4F20081AD69 /* ActivityHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BD82EBBD4F20081AD69 /* ActivityHistoryView.swift */; };
+		D0279BE02EBBD4F20081AD69 /* AutomationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BD92EBBD4F20081AD69 /* AutomationView.swift */; };
+		D0279BE12EBBD4F20081AD69 /* EnhancedControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BDA2EBBD4F20081AD69 /* EnhancedControls.swift */; };
+		D0279BE22EBBD4F20081AD69 /* QuickControlsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BDB2EBBD4F20081AD69 /* QuickControlsPanel.swift */; };
+		D0279BE32EBBD4F20081AD69 /* SceneManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0279BDC2EBBD4F20081AD69 /* SceneManagementView.swift */; };
+		D0A3DDA42EBC205C00AA4DF0 /* RoutinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDA22EBC205C00AA4DF0 /* RoutinesView.swift */; };
+		D0A3DDA52EBC205C00AA4DF0 /* EnergyDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DD9E2EBC205C00AA4DF0 /* EnergyDashboardView.swift */; };
+		D0A3DDA62EBC205C00AA4DF0 /* HubStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDA02EBC205C00AA4DF0 /* HubStatusView.swift */; };
+		D0A3DDA72EBC205C00AA4DF0 /* ZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDA32EBC205C00AA4DF0 /* ZonesView.swift */; };
+		D0A3DDA82EBC205C00AA4DF0 /* HomeDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DD9F2EBC205C00AA4DF0 /* HomeDashboardView.swift */; };
+		D0A3DDA92EBC205C00AA4DF0 /* NotificationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDA12EBC205C00AA4DF0 /* NotificationCenterView.swift */; };
+		D0A3DDAA2EBC205C00AA4DF0 /* AccessoryDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DD9D2EBC205C00AA4DF0 /* AccessoryDiagnosticsView.swift */; };
+		D0A3DDD02EBC207800AA4DF0 /* NotificationSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB02EBC207800AA4DF0 /* NotificationSystem.swift */; };
+		D0A3DDD22EBC207800AA4DF0 /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB22EBC207800AA4DF0 /* Zone.swift */; };
+		D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDAF2EBC207800AA4DF0 /* EnergyMonitoring.swift */; };
+		D0A3DDD72EBC207800AA4DF0 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB12EBC207800AA4DF0 /* Routine.swift */; };
+		AC1AE22F01134A1C860FC8F1 /* DynamicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLayout.swift; sourceTree = "<group>"; };
+		61B8794051533F2AB22AFF39 /* FontExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
+		76674B516AD41F6A133E3D8C /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		B7ACC763BF46692F935C96A1 /* SelectionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelectionManager.swift; sourceTree = "<group>"; };
+		BB0000020000000000000001 /* HomeKitTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKitTVApp.swift; sourceTree = "<group>"; };
+		BB0000040000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BB0000060000000000000001 /* HomeKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKitManager.swift; sourceTree = "<group>"; };
+		BB0000080000000000000001 /* Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
+		BB0000100000000000000001 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };
+		BB0000110000000000000001 /* HomeKitTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeKitTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000120000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB0000130000000000000001 /* HomeKitTV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HomeKitTV.entitlements; sourceTree = "<group>"; };
+		D0279BD12EBBD4E30081AD69 /* FEATURES_ADDED.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = FEATURES_ADDED.md; sourceTree = "<group>"; };
+		D0279BD22EBBD4E30081AD69 /* HomeKitTV.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = HomeKitTV.xcodeproj; sourceTree = "<group>"; };
+		D0279BD32EBBD4E30081AD69 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D0279BD42EBBD4E30081AD69 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		D0279BD82EBBD4F20081AD69 /* ActivityHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHistoryView.swift; sourceTree = "<group>"; };
+		D0279BD92EBBD4F20081AD69 /* AutomationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomationView.swift; sourceTree = "<group>"; };
+		D0279BDA2EBBD4F20081AD69 /* EnhancedControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedControls.swift; sourceTree = "<group>"; };
+		D0279BDB2EBBD4F20081AD69 /* QuickControlsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickControlsPanel.swift; sourceTree = "<group>"; };
+		D0279BDC2EBBD4F20081AD69 /* SceneManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagementView.swift; sourceTree = "<group>"; };
+		D0279BDD2EBBD4F20081AD69 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D0A3DD9C2EBC204400AA4DF0 /* NEW_FEATURES_IMPLEMENTATION.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = NEW_FEATURES_IMPLEMENTATION.md; sourceTree = "<group>"; };
+		D0A3DD9D2EBC205C00AA4DF0 /* AccessoryDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryDiagnosticsView.swift; sourceTree = "<group>"; };
+		D0A3DD9E2EBC205C00AA4DF0 /* EnergyDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyDashboardView.swift; sourceTree = "<group>"; };
+		D0A3DD9F2EBC205C00AA4DF0 /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift; sourceTree = "<group>"; };
+		D0A3DDA02EBC205C00AA4DF0 /* HubStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubStatusView.swift; sourceTree = "<group>"; };
+		D0A3DDA12EBC205C00AA4DF0 /* NotificationCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterView.swift; sourceTree = "<group>"; };
+		D0A3DDA22EBC205C00AA4DF0 /* RoutinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutinesView.swift; sourceTree = "<group>"; };
+		D0A3DDA32EBC205C00AA4DF0 /* ZonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonesView.swift; sourceTree = "<group>"; };
+		D0A3DDAB2EBC207800AA4DF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0A3DDAF2EBC207800AA4DF0 /* EnergyMonitoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyMonitoring.swift; sourceTree = "<group>"; };
+		D0A3DDB02EBC207800AA4DF0 /* NotificationSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSystem.swift; sourceTree = "<group>"; };
+		D0A3DDB12EBC207800AA4DF0 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		D0A3DDB22EBC207800AA4DF0 /* Zone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
+		D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryDiagnosticsView.swift; sourceTree = "<group>"; };		D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };		D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift; sourceTree = "<group>"; };		D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickControlsPanel.swift; sourceTree = "<group>"; };		D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagementView.swift; sourceTree = "<group>"; };/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BB0000140000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41A14BD771CBEF059D78690E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		BB0000150000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				D0A3DDAB2EBC207800AA4DF0 /* Assets.xcassets */,
+				D0A3DDAE2EBC207800AA4DF0 /* HomeKitTVTests */,
+				D0A3DDB32EBC207800AA4DF0 /* Models */,
+				D0A3DDC32EBC207800AA4DF0 /* Views */,
+				D0A3DD9C2EBC204400AA4DF0 /* NEW_FEATURES_IMPLEMENTATION.md */,
+				D0279BD12EBBD4E30081AD69 /* FEATURES_ADDED.md */,
+				D0279BD22EBBD4E30081AD69 /* HomeKitTV.xcodeproj */,
+				D0279BD32EBBD4E30081AD69 /* README.md */,
+				D0279BD42EBBD4E30081AD69 /* Settings.swift */,
+				BB0000020000000000000001 /* HomeKitTVApp.swift */,
+				BB0000040000000000000001 /* ContentView.swift */,
+				BB0000060000000000000001 /* HomeKitManager.swift */,
+				BB0000200000000000000001 /* Views */,
+				BB0000120000000000000001 /* Info.plist */,
+				BB0000130000000000000001 /* HomeKitTV.entitlements */,
+				BB0000160000000000000001 /* Products */,
+				41A14BD771CBEF059D78690E /* Extensions */,
+				61B8794051533F2AB22AFF39 /* FontExtensions.swift */,
+				AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */,
+			);
+			sourceTree = "<group>";
+		};
+		BB0000160000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000110000000000000001 /* HomeKitTV.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BB0000200000000000000001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3DD9D2EBC205C00AA4DF0 /* AccessoryDiagnosticsView.swift */,
+				D0A3DD9E2EBC205C00AA4DF0 /* EnergyDashboardView.swift */,
+				D0A3DD9F2EBC205C00AA4DF0 /* HomeDashboardView.swift */,
+				D0A3DDA02EBC205C00AA4DF0 /* HubStatusView.swift */,
+				D0A3DDA12EBC205C00AA4DF0 /* NotificationCenterView.swift */,
+				D0A3DDA22EBC205C00AA4DF0 /* RoutinesView.swift */,
+				D0A3DDA32EBC205C00AA4DF0 /* ZonesView.swift */,
+				D0279BD82EBBD4F20081AD69 /* ActivityHistoryView.swift */,
+				D0279BD92EBBD4F20081AD69 /* AutomationView.swift */,
+				D0279BDA2EBBD4F20081AD69 /* EnhancedControls.swift */,
+				D0279BDB2EBBD4F20081AD69 /* QuickControlsPanel.swift */,
+				D0279BDC2EBBD4F20081AD69 /* SceneManagementView.swift */,
+				D0279BDD2EBBD4F20081AD69 /* SettingsView.swift */,
+				BB0000080000000000000001 /* Cards.swift */,
+				BB0000100000000000000001 /* DetailViews.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D0279BD52EBBD4E30081AD69 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0A3DDAE2EBC207800AA4DF0 /* HomeKitTVTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeKitTVTests;
+			sourceTree = "<group>";
+		};
+		D0A3DDB32EBC207800AA4DF0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3DDAF2EBC207800AA4DF0 /* EnergyMonitoring.swift */,
+				D0A3DDB02EBC207800AA4DF0 /* NotificationSystem.swift */,
+				D0A3DDB12EBC207800AA4DF0 /* Routine.swift */,
+				D0A3DDB22EBC207800AA4DF0 /* Zone.swift */,
+				B7ACC763BF46692F935C96A1 /* SelectionManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D0A3DDC32EBC207800AA4DF0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */,				D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */,				D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */,				D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */,				D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */,				76674B516AD41F6A133E3D8C /* HelpView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BB0000170000000000000001 /* HomeKitTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB0000180000000000000001 /* Build configuration list for PBXNativeTarget "HomeKitTV" */;
+			buildPhases = (
+				3305403EA7464CFEA93C016E /* Wake Apple TV Devices */,
+				BB0000190000000000000001 /* Sources */,
+				BB0000140000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HomeKitTV;
+			productName = HomeKitTV;
+			productReference = BB0000110000000000000001 /* HomeKitTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3305403EA7464CFEA93C016E /* Wake Apple TV Devices */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Wake Apple TV Devices";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Wake Apple TV devices before deployment\n# Embedded script to avoid sandbox restrictions\n\necho \"📺 Waking up physical Apple TV devices...\"\n\n# CONFIGURATION: Edit these values\nAPPLETV_IPS=(\n    # \"192.168.1.100\"  # Example: Living Room Apple TV\n    # \"192.168.1.101\"  # Example: Bedroom Apple TV\n)\n\nUSE_SHORTCUTS=false\nSHORTCUT_NAME=\"\"  # Example: \"Wake Apple TVs\"\n\n# Try Shortcuts if configured\nif [ \"$USE_SHORTCUTS\" = true ] && [ -n \"$SHORTCUT_NAME\" ]; then\n    echo \"🏠 Attempting to wake via Shortcuts: $SHORTCUT_NAME\"\n    if command -v shortcuts &> /dev/null; then\n        shortcuts run \"$SHORTCUT_NAME\" 2>&1 | grep -v \"^$\"\n        [ $? -eq 0 ] && echo \"  ✅ Shortcut executed\" || echo \"  ⚠️  Shortcut failed\"\n    fi\nfi\n\n# Try network ping\nif [ ${#APPLETV_IPS[@]} -gt 0 ]; then\n    echo \"📡 Pinging Apple TVs...\"\n    for IP in \"${APPLETV_IPS[@]}\"; do\n        [[ \"$IP\" == \\#* ]] && continue\n        echo \"  Pinging $IP...\"\n        ping -c 3 -W 1 \"$IP\" > /dev/null 2>&1\n        [ $? -eq 0 ] && echo \"  ✅ $IP reachable\" || echo \"  ⚠️  $IP not responding\"\n    done\n    echo \"⏳ Waiting 3 seconds...\"\n    sleep 3\nelse\n    echo \"ℹ️  No Apple TV IPs configured\"\n    echo \"ℹ️  Edit Build Phases → Wake Apple TV Devices to add IPs\"\nfi\n\necho \"✅ Wake sequence complete\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXProject section */
+		BB0000210000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2600;
+			};
+			buildConfigurationList = BB0000220000000000000001 /* Build configuration list for PBXProject "HomeKitTV" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BB0000150000000000000001;
+			productRefGroup = BB0000160000000000000001 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D0279BD52EBBD4E30081AD69 /* Products */;
+					ProjectRef = D0279BD22EBBD4E30081AD69 /* HomeKitTV.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				BB0000170000000000000001 /* HomeKitTV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BB0000190000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0279BD72EBBD4E30081AD69 /* Settings.swift in Sources */,
+				D0279BDE2EBBD4F20081AD69 /* SettingsView.swift in Sources */,				D0A3DDC52EBC207800AA4DF0 /* RoutinesView.swift in Sources */,				D0A3DDC72EBC207800AA4DF0 /* Cards.swift in Sources */,				D0A3DDCA2EBC207800AA4DF0 /* EnhancedControls.swift in Sources */,				D0A3DDCE2EBC207800AA4DF0 /* DetailViews.swift in Sources */,				D0A3DDD02EBC207800AA4DF0 /* NotificationSystem.swift in Sources */,				D0A3DDD22EBC207800AA4DF0 /* Zone.swift in Sources */,
+				D0A3DDD32EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift in Sources */,				D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */,
+				D0A3DDD72EBC207800AA4DF0 /* Routine.swift in Sources */,
+				D0279BDF2EBBD4F20081AD69 /* ActivityHistoryView.swift in Sources */,
+				D0279BE02EBBD4F20081AD69 /* AutomationView.swift in Sources */,
+				D0A3DDA42EBC205C00AA4DF0 /* RoutinesView.swift in Sources */,
+				D0A3DDA52EBC205C00AA4DF0 /* EnergyDashboardView.swift in Sources */,
+				D0A3DDA62EBC205C00AA4DF0 /* HubStatusView.swift in Sources */,
+				D0A3DDA72EBC205C00AA4DF0 /* ZonesView.swift in Sources */,
+				D0A3DDA82EBC205C00AA4DF0 /* HomeDashboardView.swift in Sources */,
+				D0A3DDA92EBC205C00AA4DF0 /* NotificationCenterView.swift in Sources */,
+				D0A3DDAA2EBC205C00AA4DF0 /* AccessoryDiagnosticsView.swift in Sources */,
+				D0279BE12EBBD4F20081AD69 /* EnhancedControls.swift in Sources */,
+				D0279BE22EBBD4F20081AD69 /* QuickControlsPanel.swift in Sources */,
+				D0279BE32EBBD4F20081AD69 /* SceneManagementView.swift in Sources */,
+				BB0000010000000000000001 /* HomeKitTVApp.swift in Sources */,
+				BB0000030000000000000001 /* ContentView.swift in Sources */,
+				BB0000050000000000000001 /* HomeKitManager.swift in Sources */,
+				BB0000070000000000000001 /* Cards.swift in Sources */,
+				BB0000090000000000000001 /* DetailViews.swift in Sources */,
+				B1F87346A4DF30512441F753 /* HelpView.swift in Sources */,
+				8F63F7D7693758E921BEB8C6 /* FontExtensions.swift in Sources */,
+				7F6FC11595934060AA9F63D9 /* SelectionManager.swift in Sources */,
+				AC1AE22F01134A1C860FC8F1 /* DynamicLayout.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BB0000230000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Debug;
+		};
+		BB0000240000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = appletvos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Release;
+		};
+		BB0000250000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HomekitTV;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kochj.HomeKitTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = appletvos;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Debug;
+		};
+		BB0000260000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HomekitTV;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kochj.HomeKitTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = appletvos;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BB0000180000000000000001 /* Build configuration list for PBXNativeTarget "HomeKitTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB0000250000000000000001 /* Debug */,
+				BB0000260000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB0000220000000000000001 /* Build configuration list for PBXProject "HomeKitTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB0000230000000000000001 /* Debug */,
+				BB0000240000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BB0000210000000000000001 /* Project object */;
+}

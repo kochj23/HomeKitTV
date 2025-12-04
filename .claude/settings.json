@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(xcodebuild:*)",
+      "Bash(xcrun:*)",
+      "Read(/Users/kochj/Desktop/xcode/HomeKitTV/**)",
+      "Write(/Users/kochj/Desktop/xcode/HomeKitTV/**)",
+      "Edit(/Users/kochj/Desktop/xcode/HomeKitTV/**)"
+    ]
+  },
+  "env": {
+    "PROJECT_NAME": "HomeKitTV",
+    "PROJECT_PATH": "/Users/kochj/Desktop/xcode/HomeKitTV"
+  }
+}
