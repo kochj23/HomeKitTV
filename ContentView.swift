@@ -66,34 +66,31 @@ struct ContentView: View {
             .overlay(alignment: .bottom) {
                 if !homeManager.statusMessage.isEmpty {
                     VStack(spacing: 10) {
+                        HStack {
+                            Spacer()
+
+                            Button(action: {
+                                homeManager.statusMessage = ""
+                                homeManager.failedAccessories = []
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.bottom, 5)
+
                         Text(homeManager.statusMessage)
                             .font(.body)
                             .bold()
                             .multilineTextAlignment(.center)
 
-                        // Show failed devices if any
+                        // Show failed device count if any
                         if !homeManager.failedAccessories.isEmpty {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("Unreachable devices:")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-
-                                ForEach(homeManager.failedAccessories, id: \.uniqueIdentifier) { accessory in
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "exclamationmark.circle.fill")
-                                            .foregroundColor(.orange)
-                                            .font(.caption)
-                                        Text(accessory.name)
-                                            .font(.caption)
-                                        if let room = accessory.room {
-                                            Text("(\(room.name))")
-                                                .font(.caption)
-                                                .foregroundColor(.secondary)
-                                        }
-                                    }
-                                }
-                            }
-                            .padding(.top, 8)
+                            Text("Tap for details or wait to auto-dismiss")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
                     }
                     .padding(.horizontal, 40)
@@ -102,6 +99,10 @@ struct ContentView: View {
                     .cornerRadius(12)
                     .padding(.bottom, 120)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .onTapGesture {
+                        homeManager.statusMessage = ""
+                        homeManager.failedAccessories = []
+                    }
                 }
             }
 

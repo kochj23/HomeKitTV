@@ -276,10 +276,10 @@ class HomeKitManager: NSObject, ObservableObject {
                         self.failedAccessories = failedList
 
                         if failedList.isEmpty {
-                            self.statusMessage = "✓ Scene executed successfully: \(scene.name)"
+                            self.statusMessage = "✓ Scene '\(scene.name)' executed: All \(sceneAccessories.count) devices responded"
                         } else {
-                            let failedNames = failedList.map { $0.name }.joined(separator: ", ")
-                            self.statusMessage = "⚠️ Scene partially executed. Failed devices: \(failedNames)"
+                            let successCount = sceneAccessories.count - failedList.count
+                            self.statusMessage = "⚠️ Scene '\(scene.name)': \(successCount) succeeded, \(failedList.count) failed"
                         }
 
                         // Clear status message after 5 seconds (longer to read failure details)
