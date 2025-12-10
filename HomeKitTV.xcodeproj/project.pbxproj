@@ -34,6 +34,7 @@
 		D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDAF2EBC207800AA4DF0 /* EnergyMonitoring.swift */; };
 		D0A3DDD72EBC207800AA4DF0 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB12EBC207800AA4DF0 /* Routine.swift */; };
 		AC1AE22F01134A1C860FC8F1 /* DynamicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */; };
+		B7AB33B6AD35467BB5D08F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A3DDAB2EBC207800AA4DF0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -422,7 +423,7 @@
 		BB0000250000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -458,7 +459,7 @@
 		BB0000260000000000000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
