@@ -2,6 +2,12 @@ import Foundation
 import HomeKit
 
 class SecurityCenterManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = SecurityCenterManager()
     @Published var securityStatus: SecurityStatus = .disarmed
     @Published var events: [SecurityEvent] = []

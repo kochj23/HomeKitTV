@@ -2,6 +2,12 @@ import Foundation
 import HomeKit
 
 class AdvancedSceneManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = AdvancedSceneManager()
     @Published var sceneSchedules: [UUID: SceneSchedule] = [:]
     

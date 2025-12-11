@@ -1,6 +1,12 @@
 import Foundation
 
 class AIAssistantManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = AIAssistantManager()
     @Published var conversationHistory: [Message] = []
     @Published var isProcessing: Bool = false

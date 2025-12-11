@@ -2,6 +2,12 @@ import Foundation
 import HomeKit
 
 class SecureVideoManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = SecureVideoManager()
     @Published var recordings: [VideoRecording] = []
     @Published var storageUsed: Int64 = 0

@@ -37,8 +37,14 @@ class Settings: ObservableObject {
     }
 
     /// Activity history entries (limited to 50 most recent)
+    ///
+    /// **Memory Safety**: Automatically enforces 50-entry limit to prevent unbounded growth
     @Published var activityHistory: [ActivityEntry] = [] {
         didSet {
+            // Enforce retention limit
+            if activityHistory.count > 50 {
+                activityHistory = Array(activityHistory.prefix(50))
+            }
             saveHistory()
         }
     }
@@ -116,7 +122,7 @@ class Settings: ObservableObject {
         static let hideEmptyScenes = "hideEmptyScenes"
     }
 
-    // MARK: - Initialization
+    // MARK: - Initialization & Deinitialization
 
     private init() {
         // Load favorites
@@ -161,6 +167,16 @@ class Settings: ObservableObject {
         self.hideUnreachableAccessories = UserDefaults.standard.bool(forKey: Keys.hideUnreachableAccessories)
         self.hideEmptyRooms = UserDefaults.standard.bool(forKey: Keys.hideEmptyRooms)
         self.hideEmptyScenes = UserDefaults.standard.bool(forKey: Keys.hideEmptyScenes)
+    }
+
+    /// Cleans up resources
+    ///
+    /// **Memory Safety**: Even though this is a singleton, proper cleanup is documented
+    /// for testing and potential future refactoring
+    deinit {
+        // Note: Singleton typically lives for app lifetime
+        // This deinit is here for completeness and future-proofing
+        // If NotificationCenter observers are added in future, remove them here
     }
 
     // MARK: - Favorites Management

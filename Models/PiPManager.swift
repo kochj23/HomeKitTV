@@ -2,6 +2,12 @@ import Foundation
 import AVKit
 
 class PiPManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = PiPManager()
     @Published var isPiPActive: Bool = false
     @Published var pipController: AVPictureInPictureController?

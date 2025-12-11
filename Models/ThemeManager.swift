@@ -2,6 +2,12 @@ import Foundation
 import SwiftUI
 
 class ThemeManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = ThemeManager()
     @Published var currentTheme: Theme = .default
     

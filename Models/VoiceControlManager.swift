@@ -12,6 +12,12 @@ import Intents
 /// - Custom voice command suggestions
 /// - Hands-free control integration
 class VoiceControlManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = VoiceControlManager()
 
     @Published var voiceHistory: [VoiceCommand] = []

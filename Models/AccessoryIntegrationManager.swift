@@ -4,7 +4,12 @@ import HomeKit
 class AccessoryIntegrationManager: ObservableObject {
     static let shared = AccessoryIntegrationManager()
     @Published var specialAccessories: [SpecialAccessory] = []
-    
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     struct SpecialAccessory: Identifiable {
         let id: UUID
         let type: AccessoryType

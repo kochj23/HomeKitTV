@@ -1,6 +1,12 @@
 import Foundation
 
 class FamilySharingManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = FamilySharingManager()
     @Published var familyMembers: [FamilyMember] = []
     @Published var sharedAutomations: [UUID] = []

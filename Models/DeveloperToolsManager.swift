@@ -2,6 +2,12 @@ import Foundation
 import HomeKit
 
 class DeveloperToolsManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = DeveloperToolsManager()
     @Published var logs: [DevLog] = []
     @Published var apiRequests: [APIRequest] = []

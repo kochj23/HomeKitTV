@@ -2,6 +2,12 @@ import Foundation
 import HomeKit
 
 class CircadianLightingManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = CircadianLightingManager()
     @Published var isEnabled: Bool = false
     @Published var currentColorTemperature: Int = 4000

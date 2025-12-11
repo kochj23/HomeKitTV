@@ -29,6 +29,14 @@ class EnergyMonitoringManager: ObservableObject {
         startMonitoring()
     }
 
+    /// Cleans up resources to prevent memory leaks
+    ///
+    /// **Memory Safety**: Invalidates timer to break retain cycle
+    deinit {
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
+
     // MARK: - Monitoring
 
     func startMonitoring() {

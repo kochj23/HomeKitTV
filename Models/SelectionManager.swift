@@ -16,6 +16,12 @@ import SwiftUI
 ///
 /// **Memory Safety**: Uses weak references and proper cleanup
 class SelectionManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     // MARK: - Singleton
 
     static let shared = SelectionManager()

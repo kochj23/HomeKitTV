@@ -12,7 +12,15 @@ class GeofencingManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
     }
-    
+
+    /// Cleans up resources to prevent memory leaks
+    ///
+    /// **Memory Safety**: Critical - clears CLLocationManager delegate to break retain cycle
+    deinit {
+        locationManager.delegate = nil
+        locationManager.stopUpdatingLocation()
+    }
+
     func startMonitoring(homeLocation: CLLocationCoordinate2D, radius: CLLocationDistance) {
         let region = CLCircularRegion(center: homeLocation, radius: radius, identifier: "home")
         locationManager.startMonitoring(for: region)

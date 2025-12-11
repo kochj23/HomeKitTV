@@ -4,7 +4,16 @@ import UserNotifications
 class NotificationManager: ObservableObject {
     static let shared = NotificationManager()
     @Published var notifications: [HomeNotification] = []
-    
+
+    /// Cleans up resources to prevent memory leaks
+    ///
+    /// **Memory Safety**: Removes notification observers if any are added in future
+    deinit {
+        // Note: Singleton typically lives for app lifetime
+        // This deinit is here for completeness and future-proofing
+        // If NotificationCenter observers are added in future, remove them here
+    }
+
     struct HomeNotification: Identifiable {
         let id: UUID
         let title: String

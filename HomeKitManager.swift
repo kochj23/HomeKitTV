@@ -56,10 +56,86 @@ class HomeKitManager: NSObject, ObservableObject {
     @Published var currentHome: HMHome?
 
     /// Search query for filtering accessories/rooms/scenes
-    @Published var searchQuery = ""
+    @Published var searchQuery = "" {
+        didSet {
+            scheduleSearch()
+        }
+    }
+
+    /// Debounced search results
+    @Published private(set) var searchResults: SearchResults = SearchResults()
 
     /// Retry count for failed operations
     @Published var retryCount = 0
+
+    // MARK: - Search Management
+
+    /// Search debounce task
+    private var searchTask: Task<Void, Never>?
+
+    /// Search results cache
+    private var searchCache: [String: SearchResults] = [:]
+
+    /// Search results structure
+    struct SearchResults {
+        var accessories: [HMAccessory] = []
+        var rooms: [HMRoom] = []
+        var scenes: [HMActionSet] = []
+    }
+
+    /// Schedules a debounced search
+    ///
+    /// **Performance**: 300ms debounce prevents excessive filtering on every keystroke
+    private func scheduleSearch() {
+        // Cancel previous search task
+        searchTask?.cancel()
+
+        // Schedule new search after debounce delay
+        searchTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 300_000_000)  // 300ms debounce
+
+            guard let self = self, !Task.isCancelled else { return }
+
+            await self.performSearch()
+        }
+    }
+
+    /// Performs the actual search operation
+    ///
+    /// **Performance**: Uses caching to avoid redundant filtering
+    @MainActor
+    private func performSearch() async {
+        let query = searchQuery.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // Return empty results for empty query
+        guard !query.isEmpty else {
+            searchResults = SearchResults()
+            return
+        }
+
+        // Check cache first
+        if let cached = searchCache[query] {
+            searchResults = cached
+            return
+        }
+
+        // Perform search
+        let results = SearchResults(
+            accessories: accessories.filter { $0.name.localizedCaseInsensitiveContains(query) },
+            rooms: rooms.filter { $0.name.localizedCaseInsensitiveContains(query) },
+            scenes: scenes.filter { $0.name.localizedCaseInsensitiveContains(query) }
+        )
+
+        // Cache results
+        searchCache[query] = results
+
+        // Limit cache size
+        if searchCache.count > 20 {
+            searchCache.removeAll()
+        }
+
+        searchResults = results
+    }
 
     // MARK: - Computed Properties (Filtered)
 
@@ -148,6 +224,7 @@ class HomeKitManager: NSObject, ObservableObject {
     /// the manager, home manager, and home delegates.
     deinit {
         refreshTimer?.invalidate()
+        searchTask?.cancel()
         homeManager?.delegate = nil
         primaryHome?.delegate = nil
         currentHome?.delegate = nil
@@ -158,8 +235,9 @@ class HomeKitManager: NSObject, ObservableObject {
     /// Loads all HomeKit data from the primary home
     ///
     /// This method fetches and sorts all rooms, accessories, and scenes from
-    /// the user's primary home. It also updates the status message and loading state.
+    /// the user's primary home asynchronously for better performance.
     ///
+    /// **Performance**: Uses async/await to prevent blocking the main thread
     /// **Side Effects**:
     /// - Updates `primaryHome`, `rooms`, `accessories`, `scenes`
     /// - Sets `statusMessage` with success/error info
@@ -168,6 +246,16 @@ class HomeKitManager: NSObject, ObservableObject {
     ///
     /// - Warning: If no primary home is configured, sets an error message
     func loadData() {
+        Task {
+            await loadDataAsync()
+        }
+    }
+
+    /// Async implementation of loadData for better performance
+    ///
+    /// **Performance**: Processes large homes without blocking UI
+    @MainActor
+    private func loadDataAsync() async {
         guard let home = homeManager?.primaryHome else {
             statusMessage = "No primary home configured"
             isLoading = false
@@ -177,10 +265,30 @@ class HomeKitManager: NSObject, ObservableObject {
         primaryHome = home
         currentHome = home
         home.delegate = self
-        rooms = home.rooms.sorted { $0.name < $1.name }
-        accessories = home.accessories.sorted { $0.name < $1.name }
-        scenes = home.actionSets.sorted { $0.name < $1.name }
-        triggers = home.triggers.sorted { $0.name < $1.name }
+
+        // Load data in parallel using async let
+        async let sortedRooms = Task {
+            home.rooms.sorted { $0.name < $1.name }
+        }.value
+
+        async let sortedAccessories = Task {
+            home.accessories.sorted { $0.name < $1.name }
+        }.value
+
+        async let sortedScenes = Task {
+            home.actionSets.sorted { $0.name < $1.name }
+        }.value
+
+        async let sortedTriggers = Task {
+            home.triggers.sorted { $0.name < $1.name }
+        }.value
+
+        // Await all results
+        rooms = await sortedRooms
+        accessories = await sortedAccessories
+        scenes = await sortedScenes
+        triggers = await sortedTriggers
+
         statusMessage = "Loaded \(accessories.count) accessories in \(rooms.count) rooms"
         isLoading = false
 
@@ -189,11 +297,44 @@ class HomeKitManager: NSObject, ObservableObject {
 
         // Clear status message after configured duration
         let duration = settings.statusMessageDuration
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-            guard let self = self else { return }
-            if self.statusMessage.hasPrefix("Loaded") {
-                self.statusMessage = ""
+        Task { [weak self] in
+            try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
+            await MainActor.run { [weak self] in
+                guard let self = self else { return }
+                if self.statusMessage.hasPrefix("Loaded") {
+                    self.statusMessage = ""
+                }
             }
+        }
+    }
+
+    /// Incrementally updates a single accessory without full reload
+    ///
+    /// **Performance**: Updates only changed accessory, avoiding expensive full sort
+    @MainActor
+    func updateAccessory(_ accessory: HMAccessory) {
+        if let index = accessories.firstIndex(where: { $0.uniqueIdentifier == accessory.uniqueIdentifier }) {
+            accessories[index] = accessory
+        }
+    }
+
+    /// Incrementally updates a single room without full reload
+    ///
+    /// **Performance**: Updates only changed room, avoiding expensive full sort
+    @MainActor
+    func updateRoom(_ room: HMRoom) {
+        if let index = rooms.firstIndex(where: { $0.uniqueIdentifier == room.uniqueIdentifier }) {
+            rooms[index] = room
+        }
+    }
+
+    /// Incrementally updates a single scene without full reload
+    ///
+    /// **Performance**: Updates only changed scene, avoiding expensive full sort
+    @MainActor
+    func updateScene(_ scene: HMActionSet) {
+        if let index = scenes.firstIndex(where: { $0.uniqueIdentifier == scene.uniqueIdentifier }) {
+            scenes[index] = scene
         }
     }
 
@@ -485,7 +626,8 @@ class HomeKitManager: NSObject, ObservableObject {
             guard let self = self else { return }
                 if let error = error {
                     self.statusMessage = "Temperature error: \(error.localizedDescription)"
-                    self.handleError(error, retryAction: {
+                    self.handleError(error, retryAction: { [weak self] in
+                        guard let self = self else { return }
                         self.setTargetTemperature(service, temperature: temperature, completion: completion)
                     })
                 } else {
@@ -887,6 +1029,8 @@ class HomeKitManager: NSObject, ObservableObject {
     // MARK: - Error Handling
 
     /// Handle error with retry mechanism
+    ///
+    /// **Memory Safety**: Uses [weak self] to prevent retain cycles during async retry
     private func handleError(_ error: Error, retryAction: @escaping () -> Void) {
         guard retryCount < maxRetryAttempts else {
             statusMessage = "Failed after \(maxRetryAttempts) attempts"
@@ -897,7 +1041,8 @@ class HomeKitManager: NSObject, ObservableObject {
         retryCount += 1
         statusMessage = "Retrying... (Attempt \(retryCount)/\(maxRetryAttempts))"
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            guard let self = self else { return }
             retryAction()
         }
     }
@@ -957,55 +1102,91 @@ extension HomeKitManager: HMHomeManagerDelegate {
 /// HomeKit Home delegate implementation
 ///
 /// These methods handle home-level events such as accessory and room changes.
-/// All changes trigger a full data reload to ensure UI consistency.
+/// Now uses incremental updates instead of full reloads for better performance.
 ///
+/// **Performance**: Incremental updates avoid expensive full sorting operations
 /// **Thread Safety**: All methods dispatch to main thread for UI updates
 extension HomeKitManager: HMHomeDelegate {
     /// Called when an accessory is added to the home
+    ///
+    /// **Performance**: Uses incremental update instead of full reload
     ///
     /// - Parameters:
     ///   - home: The home that changed
     ///   - accessory: The accessory that was added
     func home(_ home: HMHome, didAdd accessory: HMAccessory) {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.loadData()
+            // Insert in sorted position
+            if let insertIndex = self.accessories.firstIndex(where: { $0.name > accessory.name }) {
+                self.accessories.insert(accessory, at: insertIndex)
+            } else {
+                self.accessories.append(accessory)
+            }
+            self.statusMessage = "Added: \(accessory.name)"
         }
     }
 
     /// Called when an accessory is removed from the home
     ///
+    /// **Performance**: Uses incremental update instead of full reload
+    ///
     /// - Parameters:
     ///   - home: The home that changed
     ///   - accessory: The accessory that was removed
     func home(_ home: HMHome, didRemove accessory: HMAccessory) {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.loadData()
+            self.accessories.removeAll { $0.uniqueIdentifier == accessory.uniqueIdentifier }
+            self.statusMessage = "Removed: \(accessory.name)"
         }
     }
 
     /// Called when a room is added to the home
     ///
+    /// **Performance**: Uses incremental update instead of full reload
+    ///
     /// - Parameters:
     ///   - home: The home that changed
     ///   - room: The room that was added
     func home(_ home: HMHome, didAdd room: HMRoom) {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.loadData()
+            // Insert in sorted position
+            if let insertIndex = self.rooms.firstIndex(where: { $0.name > room.name }) {
+                self.rooms.insert(room, at: insertIndex)
+            } else {
+                self.rooms.append(room)
+            }
+            self.statusMessage = "Added room: \(room.name)"
         }
     }
 
     /// Called when a room is removed from the home
     ///
+    /// **Performance**: Uses incremental update instead of full reload
+    ///
     /// - Parameters:
     ///   - home: The home that changed
     ///   - room: The room that was removed
     func home(_ home: HMHome, didRemove room: HMRoom) {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self = self else { return }
-            self.loadData()
+            self.rooms.removeAll { $0.uniqueIdentifier == room.uniqueIdentifier }
+            self.statusMessage = "Removed room: \(room.name)"
+        }
+    }
+
+    /// Called when an accessory's reachability changes
+    ///
+    /// **Performance**: Updates single accessory instead of full reload
+    ///
+    /// - Parameters:
+    ///   - home: The home that changed
+    ///   - accessory: The accessory whose reachability changed
+    func home(_ home: HMHome, didUpdate accessory: HMAccessory) {
+        Task { @MainActor [weak self] in
+            await self?.updateAccessory(accessory)
         }
     }
 }

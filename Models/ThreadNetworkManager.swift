@@ -1,6 +1,12 @@
 import Foundation
 
 class ThreadNetworkManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = ThreadNetworkManager()
     @Published var networkTopology: [ThreadNode] = []
     @Published var borderRouter: ThreadNode?

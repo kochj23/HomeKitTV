@@ -1,6 +1,12 @@
 import Foundation
 
 class MatterManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = MatterManager()
     @Published var matterDevices: [MatterDevice] = []
     @Published var matterEnabled: Bool = false

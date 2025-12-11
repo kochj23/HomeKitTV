@@ -162,13 +162,13 @@ struct AccessoryCard: View {
                 }
 
                 Text(accessory.name)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.headline)  // Dynamic Type support
                     .foregroundColor(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
 
                 Text(accessory.room?.name ?? "No Room")
-                    .font(.system(size: 11))
+                    .font(.caption)  // Dynamic Type support
                     .foregroundColor(.secondary)
                     .minimumScaleFactor(0.7)
             }
@@ -179,6 +179,46 @@ struct AccessoryCard: View {
             .opacity(accessory.isReachable ? 1.0 : 0.5)
         }
         .buttonStyle(.plain)
+        // MARK: - Accessibility
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint(accessibilityHint)
+        .accessibilityValue(accessibilityValue)
+        .accessibilityAddTraits(primaryService != nil ? .isButton : [])
+        .accessibilityRemoveTraits(accessory.isReachable ? [] : .isButton)
+    }
+
+    /// Accessibility label for VoiceOver
+    private var accessibilityLabel: String {
+        "\(accessory.name) in \(accessory.room?.name ?? "No Room")"
+    }
+
+    /// Accessibility hint for VoiceOver
+    private var accessibilityHint: String {
+        if !accessory.isReachable {
+            return "Not responding"
+        }
+        return primaryService != nil ? "Double tap to toggle power" : "View accessory details"
+    }
+
+    /// Accessibility value for VoiceOver
+    private var accessibilityValue: String {
+        var components: [String] = []
+
+        if let service = primaryService {
+            components.append(isOn ? "On" : "Off")
+        }
+
+        if let battery = batteryLevel {
+            let batteryStatus = isLowBattery ? "Low battery" : "Battery"
+            components.append("\(batteryStatus) \(battery) percent")
+        }
+
+        if !accessory.isReachable {
+            components.append("Not reachable")
+        }
+
+        return components.isEmpty ? "No status" : components.joined(separator: ", ")
     }
 
     /// Get appropriate battery icon based on level
@@ -284,13 +324,13 @@ struct RoomCard: View {
             }
 
             Text(room.name)
-                .font(.system(size: 18, weight: .bold))
+                .font(.headline)  // Dynamic Type support
                 .foregroundColor(.primary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
             Text("\(accessories.count) accessories")
-                .font(.system(size: 11))
+                .font(.caption)  // Dynamic Type support
                 .foregroundColor(.secondary)
                 .minimumScaleFactor(0.7)
         }
@@ -298,6 +338,12 @@ struct RoomCard: View {
         .frame(width: 350, height: 200)
         .background(Color.gray.opacity(0.15))
         .cornerRadius(16)
+        // MARK: - Accessibility
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(room.name) room")
+        .accessibilityValue("\(accessories.count) accessories\(activeCount > 0 ? ", \(activeCount) turned on" : "")")
+        .accessibilityHint("Double tap to view accessories in this room")
+        .accessibilityAddTraits(.isButton)
     }
 
     /// Determines the appropriate SF Symbol icon for a room
@@ -385,7 +431,7 @@ struct SceneCard: View {
                     .foregroundColor(.orange)
 
                 Text(scene.name)
-                    .font(.system(size: 18, weight: .bold))
+                    .font(.headline)  // Dynamic Type support
                     .foregroundColor(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
@@ -397,6 +443,12 @@ struct SceneCard: View {
             .cornerRadius(16)
         }
         .buttonStyle(.plain)
+        // MARK: - Accessibility
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Scene: \(scene.name)")
+        .accessibilityHint("Double tap to execute this scene")
+        .accessibilityValue("\(scene.actions.count) actions\(isFavorite ? ", favorited" : "")")
+        .accessibilityAddTraits(.isButton)
     }
 
     /// Determines the appropriate SF Symbol icon for a scene

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B13389ECE7B7C91B19E3C60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A3DDAB2EBC207800AA4DF0 /* Assets.xcassets */; };
 		7F6FC11595934060AA9F63D9 /* SelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7ACC763BF46692F935C96A1 /* SelectionManager.swift */; };
 		8F63F7D7693758E921BEB8C6 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B8794051533F2AB22AFF39 /* FontExtensions.swift */; };
+		AC1AE22F01134A1C860FC8F1 /* DynamicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */; };
 		B1F87346A4DF30512441F753 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76674B516AD41F6A133E3D8C /* HelpView.swift */; };
 		BB0000010000000000000001 /* HomeKitTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000020000000000000001 /* HomeKitTVApp.swift */; };
 		BB0000030000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000040000000000000001 /* ContentView.swift */; };
@@ -33,14 +35,12 @@
 		D0A3DDD22EBC207800AA4DF0 /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB22EBC207800AA4DF0 /* Zone.swift */; };
 		D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDAF2EBC207800AA4DF0 /* EnergyMonitoring.swift */; };
 		D0A3DDD72EBC207800AA4DF0 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3DDB12EBC207800AA4DF0 /* Routine.swift */; };
-		AC1AE22F01134A1C860FC8F1 /* DynamicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */; };
-		B7AB33B6AD35467BB5D08F39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0A3DDAB2EBC207800AA4DF0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLayout.swift; sourceTree = "<group>"; };
 		61B8794051533F2AB22AFF39 /* FontExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		76674B516AD41F6A133E3D8C /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		AAC90CE5A21244C7B8558F07 /* DynamicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLayout.swift; sourceTree = "<group>"; };
 		B7ACC763BF46692F935C96A1 /* SelectionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelectionManager.swift; sourceTree = "<group>"; };
 		BB0000020000000000000001 /* HomeKitTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKitTVApp.swift; sourceTree = "<group>"; };
 		BB0000040000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,7 +73,12 @@
 		D0A3DDB02EBC207800AA4DF0 /* NotificationSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSystem.swift; sourceTree = "<group>"; };
 		D0A3DDB12EBC207800AA4DF0 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		D0A3DDB22EBC207800AA4DF0 /* Zone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
-		D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryDiagnosticsView.swift; sourceTree = "<group>"; };		D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };		D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift; sourceTree = "<group>"; };		D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickControlsPanel.swift; sourceTree = "<group>"; };		D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagementView.swift; sourceTree = "<group>"; };/* End PBXFileReference section */
+		D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryDiagnosticsView.swift; sourceTree = "<group>"; };
+		D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };
+		D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDashboardView.swift; sourceTree = "<group>"; };
+		D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickControlsPanel.swift; sourceTree = "<group>"; };
+		D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagementView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BB0000140000000000000001 /* Frameworks */ = {
@@ -177,7 +182,12 @@
 		D0A3DDC32EBC207800AA4DF0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */,				D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */,				D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */,				D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */,				D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */,				76674B516AD41F6A133E3D8C /* HelpView.swift */,
+				D0A3DDB42EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift */,
+				D0A3DDB82EBC207800AA4DF0 /* DetailViews.swift */,
+				D0A3DDBB2EBC207800AA4DF0 /* HomeDashboardView.swift */,
+				D0A3DDBE2EBC207800AA4DF0 /* QuickControlsPanel.swift */,
+				D0A3DDC02EBC207800AA4DF0 /* SceneManagementView.swift */,
+				76674B516AD41F6A133E3D8C /* HelpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,6 +202,7 @@
 				3305403EA7464CFEA93C016E /* Wake Apple TV Devices */,
 				BB0000190000000000000001 /* Sources */,
 				BB0000140000000000000001 /* Frameworks */,
+				F7711AF601219863223876FC /* Resources */,
 			);
 			buildRules = (
 			);
@@ -203,29 +214,6 @@
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3305403EA7464CFEA93C016E /* Wake Apple TV Devices */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Wake Apple TV Devices";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "# Wake Apple TV devices before deployment\n# Embedded script to avoid sandbox restrictions\n\necho \"📺 Waking up physical Apple TV devices...\"\n\n# CONFIGURATION: Edit these values\nAPPLETV_IPS=(\n    # \"192.168.1.100\"  # Example: Living Room Apple TV\n    # \"192.168.1.101\"  # Example: Bedroom Apple TV\n)\n\nUSE_SHORTCUTS=false\nSHORTCUT_NAME=\"\"  # Example: \"Wake Apple TVs\"\n\n# Try Shortcuts if configured\nif [ \"$USE_SHORTCUTS\" = true ] && [ -n \"$SHORTCUT_NAME\" ]; then\n    echo \"🏠 Attempting to wake via Shortcuts: $SHORTCUT_NAME\"\n    if command -v shortcuts &> /dev/null; then\n        shortcuts run \"$SHORTCUT_NAME\" 2>&1 | grep -v \"^$\"\n        [ $? -eq 0 ] && echo \"  ✅ Shortcut executed\" || echo \"  ⚠️  Shortcut failed\"\n    fi\nfi\n\n# Try network ping\nif [ ${#APPLETV_IPS[@]} -gt 0 ]; then\n    echo \"📡 Pinging Apple TVs...\"\n    for IP in \"${APPLETV_IPS[@]}\"; do\n        [[ \"$IP\" == \\#* ]] && continue\n        echo \"  Pinging $IP...\"\n        ping -c 3 -W 1 \"$IP\" > /dev/null 2>&1\n        [ $? -eq 0 ] && echo \"  ✅ $IP reachable\" || echo \"  ⚠️  $IP not responding\"\n    done\n    echo \"⏳ Waiting 3 seconds...\"\n    sleep 3\nelse\n    echo \"ℹ️  No Apple TV IPs configured\"\n    echo \"ℹ️  Edit Build Phases → Wake Apple TV Devices to add IPs\"\nfi\n\necho \"✅ Wake sequence complete\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXProject section */
 		BB0000210000000000000001 /* Project object */ = {
@@ -262,14 +250,50 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F7711AF601219863223876FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B13389ECE7B7C91B19E3C60 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3305403EA7464CFEA93C016E /* Wake Apple TV Devices */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Wake Apple TV Devices";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# Wake Apple TV devices before deployment\n# Embedded script to avoid sandbox restrictions\n\necho \"📺 Waking up physical Apple TV devices...\"\n\n# CONFIGURATION: Edit these values\nAPPLETV_IPS=(\n    # \"192.168.1.100\"  # Example: Living Room Apple TV\n    # \"192.168.1.101\"  # Example: Bedroom Apple TV\n)\n\nUSE_SHORTCUTS=false\nSHORTCUT_NAME=\"\"  # Example: \"Wake Apple TVs\"\n\n# Try Shortcuts if configured\nif [ \"$USE_SHORTCUTS\" = true ] && [ -n \"$SHORTCUT_NAME\" ]; then\n    echo \"🏠 Attempting to wake via Shortcuts: $SHORTCUT_NAME\"\n    if command -v shortcuts &> /dev/null; then\n        shortcuts run \"$SHORTCUT_NAME\" 2>&1 | grep -v \"^$\"\n        [ $? -eq 0 ] && echo \"  ✅ Shortcut executed\" || echo \"  ⚠️  Shortcut failed\"\n    fi\nfi\n\n# Try network ping\nif [ ${#APPLETV_IPS[@]} -gt 0 ]; then\n    echo \"📡 Pinging Apple TVs...\"\n    for IP in \"${APPLETV_IPS[@]}\"; do\n        [[ \"$IP\" == \\#* ]] && continue\n        echo \"  Pinging $IP...\"\n        ping -c 3 -W 1 \"$IP\" > /dev/null 2>&1\n        [ $? -eq 0 ] && echo \"  ✅ $IP reachable\" || echo \"  ⚠️  $IP not responding\"\n    done\n    echo \"⏳ Waiting 3 seconds...\"\n    sleep 3\nelse\n    echo \"ℹ️  No Apple TV IPs configured\"\n    echo \"ℹ️  Edit Build Phases → Wake Apple TV Devices to add IPs\"\nfi\n\necho \"✅ Wake sequence complete\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BB0000190000000000000001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D0279BD72EBBD4E30081AD69 /* Settings.swift in Sources */,
-				D0279BDE2EBBD4F20081AD69 /* SettingsView.swift in Sources */,				D0A3DDC52EBC207800AA4DF0 /* RoutinesView.swift in Sources */,				D0A3DDC72EBC207800AA4DF0 /* Cards.swift in Sources */,				D0A3DDCA2EBC207800AA4DF0 /* EnhancedControls.swift in Sources */,				D0A3DDCE2EBC207800AA4DF0 /* DetailViews.swift in Sources */,				D0A3DDD02EBC207800AA4DF0 /* NotificationSystem.swift in Sources */,				D0A3DDD22EBC207800AA4DF0 /* Zone.swift in Sources */,
-				D0A3DDD32EBC207800AA4DF0 /* AccessoryDiagnosticsView.swift in Sources */,				D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */,
+				D0279BDE2EBBD4F20081AD69 /* SettingsView.swift in Sources */,
+				D0A3DDD02EBC207800AA4DF0 /* NotificationSystem.swift in Sources */,
+				D0A3DDD22EBC207800AA4DF0 /* Zone.swift in Sources */,
+				D0A3DDD62EBC207800AA4DF0 /* EnergyMonitoring.swift in Sources */,
 				D0A3DDD72EBC207800AA4DF0 /* Routine.swift in Sources */,
 				D0279BDF2EBBD4F20081AD69 /* ActivityHistoryView.swift in Sources */,
 				D0279BE02EBBD4F20081AD69 /* AutomationView.swift in Sources */,
@@ -423,7 +447,7 @@
 		BB0000250000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -459,7 +483,7 @@
 		BB0000260000000000000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HomeKitTV.entitlements;
 				CODE_SIGN_STYLE = Automatic;

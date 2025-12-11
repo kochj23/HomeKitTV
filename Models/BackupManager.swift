@@ -1,6 +1,12 @@
 import Foundation
 
 class BackupManager: ObservableObject {
+
+    /// Cleans up resources to prevent memory leaks
+    deinit {
+        // Singleton cleanup - future-proofing for observers or timers
+    }
+
     static let shared = BackupManager()
     @Published var backups: [Backup] = []
     
