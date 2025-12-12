@@ -216,7 +216,7 @@ Assets.xcassets/
 
 ---
 
-**Fixed by**: Jordan Koch & Claude Code
+**Fixed by**: Jordan Koch
 **Date**: December 10, 2025
 **Time**: 17:47
 **Attempt**: 5 (complete solution!)

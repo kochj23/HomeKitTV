@@ -181,7 +181,7 @@ Submit without Top Shelf images and add them in a future update. Many apps ship 
 
 ---
 
-**Created by**: Jordan Koch & Claude Code
+**Created by**: Jordan Koch
 **Date**: December 10, 2025
 **Attempts**: 6
 **Lessons learned**: tvOS asset requirements are surprisingly complex!

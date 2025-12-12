@@ -116,7 +116,7 @@ The script tries two methods to wake your Apple TVs:
 
 ---
 
-**Developed by**: Jordan Koch with Claude Code
+**Developed by**: Jordan Koch
 **Configuration**: Edit in Xcode → Build Phases → Wake Apple TV Devices
 **Documentation**: This file (`WAKE_APPLETV_SETUP.md`)
 **Reference Script**: `/Volumes/Data/xcode/HomeKitTV/scripts/wake-appletv-devices.sh` (for reference only, not used by build)

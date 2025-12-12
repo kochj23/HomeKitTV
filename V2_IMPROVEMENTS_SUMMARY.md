@@ -2,7 +2,7 @@
 
 **Release Date**: December 11, 2025
 **Version**: 2.0.0 (Build 2)
-**Author**: Jordan Koch (with Claude Code assistance)
+**Author**: Jordan Koch
 
 ---
 

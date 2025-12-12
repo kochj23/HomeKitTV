@@ -157,7 +157,7 @@ This archive has everything Apple needs based on all the errors we've seen so fa
 
 ---
 
-**Created by**: Jordan Koch & Claude Code
+**Created by**: Jordan Koch
 **Date**: December 10, 2025
 **Time**: 18:14
 **Attempt**: 7 (The successful one!)

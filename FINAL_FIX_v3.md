@@ -189,7 +189,7 @@ Assets.xcassets/
 
 ---
 
-**Fixed by**: Jordan Koch & Claude Code
+**Fixed by**: Jordan Koch
 **Date**: December 10, 2025
 **Time**: 17:45
 **Attempt**: 4 (this one will work!)
