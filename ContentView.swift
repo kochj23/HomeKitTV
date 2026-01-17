@@ -26,6 +26,9 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
+            // Glassmorphic background
+            GlassmorphicBackground()
+
             TabView(selection: $selectedTab) {
                 HomeView(showingQuickControls: $showingQuickControls)
                     .tabItem {

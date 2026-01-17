@@ -14,6 +14,7 @@
 		B1F87346A4DF30512441F753 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76674B516AD41F6A133E3D8C /* HelpView.swift */; };
 		BB0000010000000000000001 /* HomeKitTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000020000000000000001 /* HomeKitTVApp.swift */; };
 		BB0000030000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000040000000000000001 /* ContentView.swift */; };
+		BB0000031234567890123456 /* ModernDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000041234567890123456 /* ModernDesign.swift */; };
 		BB0000050000000000000001 /* HomeKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000060000000000000001 /* HomeKitManager.swift */; };
 		BB0000070000000000000001 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000080000000000000001 /* Cards.swift */; };
 		BB0000090000000000000001 /* DetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000100000000000000001 /* DetailViews.swift */; };
@@ -44,6 +45,7 @@
 		B7ACC763BF46692F935C96A1 /* SelectionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SelectionManager.swift; sourceTree = "<group>"; };
 		BB0000020000000000000001 /* HomeKitTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKitTVApp.swift; sourceTree = "<group>"; };
 		BB0000040000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BB0000041234567890123456 /* ModernDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernDesign.swift; sourceTree = "<group>"; };
 		BB0000060000000000000001 /* HomeKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKitManager.swift; sourceTree = "<group>"; };
 		BB0000080000000000000001 /* Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		BB0000100000000000000001 /* DetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViews.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				D0279BD42EBBD4E30081AD69 /* Settings.swift */,
 				BB0000020000000000000001 /* HomeKitTVApp.swift */,
 				BB0000040000000000000001 /* ContentView.swift */,
+				BB0000041234567890123456 /* ModernDesign.swift */,
 				BB0000060000000000000001 /* HomeKitManager.swift */,
 				BB0000200000000000000001 /* Views */,
 				BB0000120000000000000001 /* Info.plist */,
@@ -309,6 +312,7 @@
 				D0279BE32EBBD4F20081AD69 /* SceneManagementView.swift in Sources */,
 				BB0000010000000000000001 /* HomeKitTVApp.swift in Sources */,
 				BB0000030000000000000001 /* ContentView.swift in Sources */,
+				BB0000031234567890123456 /* ModernDesign.swift in Sources */,
 				BB0000050000000000000001 /* HomeKitManager.swift in Sources */,
 				BB0000070000000000000001 /* Cards.swift in Sources */,
 				BB0000090000000000000001 /* DetailViews.swift in Sources */,
