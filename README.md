@@ -1,140 +1,352 @@
 # HomeKitTV v3.2.0
 
-A native tvOS application for controlling HomeKit smart home devices from Apple TV, optimized for TV remote navigation.
+**Native tvOS application for controlling HomeKit smart home from Apple TV**
 
-## 🆕 What's New in v3.2.0 (January 2026)
+Control your entire smart home from the comfort of your couch with Apple TV remote gestures and a TV-optimized interface.
 
-### Enhanced Apple TV Remote Control
+---
+
+## What is HomeKitTV?
+
+HomeKitTV is a comprehensive tvOS application that brings full HomeKit control to your Apple TV. Designed specifically for the big screen and Apple TV Siri Remote, it provides an intuitive card-based interface for managing lights, outlets, switches, thermostats, fans, locks, and all HomeKit accessories from your TV.
+
+**Key Benefits:**
+- **Big Screen Control**: View and control all HomeKit devices from TV
+- **Apple TV Remote Optimized**: Swipe gestures for intuitive navigation
+- **Room Organization**: Browse accessories by room for quick access
+- **Scene Activation**: Execute HomeKit scenes with one click
+- **Real-Time Updates**: Live status updates for all accessories
+- **TV-Optimized UI**: Large cards and text readable from 10+ feet away
+
+**Perfect For:**
+- **Smart Home Owners**: Central control point in living room
+- **Accessibility**: Easier than phone for some users
+- **Guests**: Simple interface for visitors
+- **Automation**: Quick scene activation from couch
+
+---
+
+## What's New in v3.2.0 (January 2026)
+
+### 📱 Enhanced Apple TV Remote Control
 **Full swipe gesture support for intuitive navigation:**
 
-- **Swipe Up** - Scroll up in current view (notification system integration)
-- **Swipe Down** - Scroll down through accessories and rooms
-- **Swipe Left** - Navigate back or previous item
-- **Swipe Right** - Navigate forward or next item
-- **Notification-Based** - Uses NotificationCenter for app-wide gesture handling
-- **Memory Safe** - Proper observer cleanup to prevent crashes
+- **Swipe Up**: Scroll up through lists and accessories
+- **Swipe Down**: Scroll down through content
+- **Swipe Left**: Navigate back or previous item
+- **Swipe Right**: Navigate forward or next item
+- **Notification-Based**: App-wide gesture handling via NotificationCenter
+- **Memory Safe**: Proper observer cleanup prevents crashes
 
-**Usage:**
-- Natural swipe gestures on Apple TV remote
-- Consistent behavior across all app views
-- Ideal for navigating long lists of accessories
+**Technical Implementation:**
+```swift
+// RemoteControlManager.swift
+func handleSwipeGesture(_ direction: SwipeDirection) {
+    switch direction {
+    case .up:
+        NotificationCenter.default.post(name: .scrollUp, object: nil)
+    case .down:
+        NotificationCenter.default.post(name: .scrollDown, object: nil)
+    case .left:
+        NotificationCenter.default.post(name: .navigateBack, object: nil)
+    case .right:
+        NotificationCenter.default.post(name: .navigateForward, object: nil)
+    }
+}
+```
 
-## Description
-
-HomeKitTV is a comprehensive tvOS application that brings full HomeKit control to your Apple TV. Designed specifically for the big screen and Apple TV remote, it provides an intuitive card-based interface for managing lights, outlets, switches, thermostats, fans, and other HomeKit accessories. The app features four main sections: Home overview, Rooms, Scenes, and All Accessories, with dedicated detail views for advanced controls like brightness adjustment.
-
-## Platform
-
-- **Platform:** tvOS
-- **Minimum Version:** tvOS 14.0 or later
-- **Language:** Swift 5
-- **Framework:** SwiftUI, HomeKit
+---
 
 ## Features
 
-### Core Features
-- Full HomeKit integration with Apple TV
-- Tab-based navigation (Home, Rooms, Scenes, Accessories)
-- Card-based UI optimized for TV viewing from distance
-- Power control for lights, outlets, and switches
-- Brightness control with slider interface
-- Scene execution with one click
-- Room-based accessory organization
-- Real-time status updates
-- Loading states and empty state guidance
+### Core Functionality
+- **Full HomeKit Integration**: Control all HomeKit accessories from Apple TV
+- **Four Main Sections**: Home overview, Rooms, Scenes, All Accessories
+- **Tab Navigation**: Easy switching between main views
+- **Card-Based UI**: Large cards optimized for TV viewing from distance
+- **Real-Time Status**: Live updates for all accessory states
+- **Apple TV Remote Support (v3.2.0)**: Full swipe gesture navigation
 
 ### Home View
-- Primary home name display
-- Favorite scenes quick access (first 6)
-- Room overview cards with accessory counts
-- Adaptive grid layout
+- **Primary Home Display**: Shows active HomeKit home name
+- **Favorite Scenes**: Quick access to first 6 favorite scenes
+- **Room Overview**: Cards showing all rooms with accessory counts
+- **Adaptive Grid**: Responsive layout for different screen sizes
 
 ### Rooms View
-- Grid of all rooms in the home
-- Accessory count per room
-- Navigation to room detail views
-- Room-specific accessory control
+- **Room Grid**: All rooms displayed as navigable cards
+- **Accessory Counts**: Shows number of accessories per room
+- **Room Navigation**: Drill down to room details
+- **Room-Specific Controls**: Control all accessories in a room
 
 ### Scenes View
-- All configured HomeKit scenes
-- One-tap scene activation
-- Visual scene cards
-- Grid layout optimized for TV
+- **All Configured Scenes**: Every HomeKit scene available
+- **One-Tap Activation**: Execute scenes with single click
+- **Visual Scene Cards**: Iconography for quick identification
+- **Grid Layout**: Optimized for TV browsing
 
 ### Accessories View
-- Complete list of all HomeKit accessories
-- Navigation to detailed accessory controls
-- Sorted by accessory type
-- Card-based presentation
+- **Complete Accessory List**: All HomeKit accessories in one view
+- **Type Sorting**: Organized by accessory type (lights, switches, etc.)
+- **Detail Navigation**: Tap for detailed controls
+- **Card Presentation**: Consistent UI throughout
 
-### Detail Views
-- Accessory detail with all services
-- Brightness control for lights
-- Service-specific controls
-- Real-time characteristic updates
+### Accessory Controls
+- **Power Control**: On/off toggle for lights, outlets, switches
+- **Brightness Control**: Slider interface for dimmable lights
+- **Color Control**: HSB color picker for color bulbs
+- **Thermostat Control**: Temperature adjustment, mode selection
+- **Fan Control**: Speed control, oscillation toggle
+- **Lock Control**: Lock/unlock with confirmation dialogs
+- **Window Covering**: Position control for blinds/shades
+- **Service-Specific**: Dedicated controls for each accessory type
+
+### Navigation & Gestures (v3.2.0)
+- **Swipe Up/Down**: Scroll through lists
+- **Swipe Left/Right**: Navigate back/forward
+- **Click to Select**: Standard Siri Remote click
+- **Menu Button**: Navigate back one level
+- **Home Button**: Return to tvOS home screen
+
+---
+
+## Security
+
+### HomeKit Security
+- **Encrypted Communication**: All HomeKit traffic encrypted end-to-end
+- **iCloud Keychain**: Credentials stored securely by HomeKit framework
+- **Same Network**: Accessories must be on same network as Apple TV
+- **Authentication**: Requires same iCloud account as iOS device with Home app
+
+### Privacy
+- **No External Services**: All control happens locally via HomeKit
+- **No Cloud Dependencies**: Direct accessory communication
+- **No Telemetry**: Zero analytics or tracking
+- **Local Processing**: Everything stays on your network
+
+### Best Practices
+- Ensure Apple TV and accessories on secure Wi-Fi network
+- Use strong Wi-Fi password (WPA3 preferred)
+- Keep Apple TV software updated
+- Verify all accessories have latest firmware
+- Use HomeKit Secure Video for cameras
+
+---
 
 ## Requirements
 
-- Xcode 26.0.1 or later
-- tvOS 14.0 SDK or later
-- Swift 5 compiler
-- Apple TV 4K or Apple TV HD
-- HomeKit accessories configured in Home app
-- Same iCloud account as iOS device with HomeKit setup
+### Hardware Requirements
+- **Apple TV 4K** (1st gen or later) OR
+- **Apple TV HD** (4th generation)
+- **HomeKit Accessories**: At least one HomeKit-compatible device
+- **Wi-Fi Network**: Apple TV and accessories on same network
+
+### Software Requirements
+- **tvOS 14.0 or later** (tvOS 14, 15, 16, 17, 18 beta)
+- **iOS Device**: iPhone or iPad with Home app for initial setup
+- **iCloud Account**: Same account on Apple TV and iOS device
+- **Home App**: Accessories configured in iOS Home app
+
+### Network Requirements
+- **Local Network Access**: Apple TV must reach accessories
+- **Internet**: Not required for basic control (needed for remote access)
+- **Router**: Support for mDNS/Bonjour for accessory discovery
+
+### Development Requirements
+- **Xcode 15.0+** (for building from source)
+- **macOS 13.0+** (Ventura or later for Xcode)
+- **tvOS 14.0+ SDK**
+
+---
 
 ## Installation
 
+### Option 1: Sideload to Apple TV
+
+1. **Connect Apple TV** to Mac via USB-C
+2. **Open Xcode** and select Window → Devices and Simulators
+3. **Select your Apple TV** in device list
+4. **Click "+"** to add app
+5. **Select** built .app bundle
+6. **Wait for installation** to complete
+7. **Launch** from Apple TV home screen
+
+### Option 2: Build and Deploy
+
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/kochj23/HomeKitTV.git
+   cd HomeKitTV
+   ```
+
+2. **Open in Xcode:**
+   ```bash
+   open "HomeKitTV.xcodeproj"
+   ```
+
+3. **Select Apple TV:**
+   - Choose your Apple TV from device list
+   - Or select tvOS Simulator
+
+4. **Build and Run:**
+   - Press ⌘R to build and deploy
+   - App automatically launches on Apple TV
+
+### Option 3: TestFlight (If Configured)
+
+1. Install TestFlight on Apple TV
+2. Accept invitation
+3. Install HomeKitTV
+4. Launch from home screen
+
+---
+
+## Configuration
+
 ### Prerequisites
 
-1. Set up HomeKit accessories using iPhone/iPad Home app
-2. Ensure Apple TV is signed in to the same iCloud account
-3. HomeKit accessories must be on the same network as Apple TV
+1. **Set up HomeKit** on iPhone/iPad using Home app:
+   - Add accessories
+   - Organize into rooms
+   - Create scenes
+   - Configure automations
 
-### Building from Source
+2. **Ensure Apple TV** is signed in to same iCloud account
 
-1. Clone or download the repository
-2. Open `HomeKitTV.xcodeproj` in Xcode
-3. Select tvOS simulator or Apple TV device
-4. Build the project using `Product > Build` (⌘B)
-5. Run the application using `Product > Run` (⌘R)
+3. **Verify Network**: Apple TV and accessories on same Wi-Fi
 
-### Deployment to Apple TV
+### First Launch
 
-1. Connect Apple TV to Mac via USB-C (Apple TV 4K 1st/2nd gen) or network
-2. Enable Remote Login on Apple TV (Settings > Remotes and Devices > Remote App and Devices)
-3. Select Apple TV as destination in Xcode
-4. Build and run from Xcode
+1. **Launch HomeKitTV** from Apple TV home screen
+
+2. **Grant Permissions**:
+   - HomeKit access permission
+   - Local network access
+
+3. **Wait for Discovery**:
+   - App automatically discovers HomeKit homes
+   - Loads all accessories, rooms, scenes
+
+4. **Navigate**:
+   - Use Siri Remote to browse tabs
+   - Swipe gestures (v3.2.0) for smooth navigation
+   - Click on accessories to control
+
+### Customization
+
+**HomeKit Configuration** (via iOS Home app):
+- Assign accessories to rooms
+- Create custom scenes
+- Set favorite scenes (appear first in HomeKitTV)
+- Name accessories clearly (names appear on TV)
+
+**Apple TV Settings:**
+- Display settings for text size
+- Reduce motion if needed
+- VoiceOver for accessibility
+
+---
 
 ## Usage
 
-### Navigation
+### Basic Operation
 
-Use the Apple TV remote (Siri Remote) to navigate:
-- **Swipe:** Navigate between cards and tabs
-- **Click:** Select items and toggle switches
-- **Menu Button:** Go back to previous screen
-- **TV/Home Button:** Exit to tvOS home screen
+**Launch App:**
+- Navigate to HomeKitTV icon on Apple TV home screen
+- Click to open
+
+**Main Navigation:**
+- **Home Tab**: Overview with favorite scenes and rooms
+- **Rooms Tab**: Browse by room
+- **Scenes Tab**: Execute scenes
+- **Accessories Tab**: All devices listed
 
 ### Controlling Accessories
 
-1. Select the appropriate tab (Home, Rooms, Scenes, or Accessories)
-2. Navigate to the desired accessory or scene
-3. Click to toggle power or execute scene
-4. For lights, navigate to the accessory to access brightness controls
+**Turn On/Off:**
+1. Navigate to accessory card
+2. Click to toggle power
+3. Status updates immediately
 
-### Brightness Control
+**Adjust Brightness:**
+1. Select light accessory
+2. Navigate to detail view
+3. Use slider to adjust
+4. Changes apply in real-time
 
-1. Navigate to Accessories tab
-2. Select a light accessory
-3. Use the brightness slider to adjust light level
-4. Click to confirm or swipe to navigate
+**Control Thermostat:**
+1. Select thermostat
+2. Adjust temperature with +/- controls
+3. Change mode (heat/cool/auto)
+4. View current temperature
 
-### Executing Scenes
+**Activate Scene:**
+1. Go to Scenes tab
+2. Select scene card
+3. Click to activate
+4. All accessories execute scene
 
-1. Go to the Scenes tab
-2. Select a scene card
-3. Click to execute the scene
-4. Status message appears confirming execution
+### Apple TV Remote Gestures (v3.2.0)
+
+**Scrolling:**
+- Swipe Up: Scroll up through content
+- Swipe Down: Scroll down through lists
+
+**Navigation:**
+- Swipe Left: Go back to previous screen
+- Swipe Right: Go forward (if applicable)
+- Click: Select item
+- Menu Button: Go back one level
+
+**Tips:**
+- Swipe gestures work throughout entire app
+- Smooth scrolling for long accessory lists
+- Consistent behavior across all views
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**No Accessories Showing:**
+- Verify HomeKit setup in iOS Home app
+- Check Apple TV signed into same iCloud account
+- Ensure Apple TV and accessories on same network
+- Restart HomeKitTV app
+- Restart Apple TV if persistent
+
+**Can't Control Accessories:**
+- Check accessory is responding in iOS Home app
+- Verify network connectivity
+- Check HomeKit permission granted to app
+- Try resetting accessory
+- Check accessory firmware is up to date
+
+**Swipe Gestures Not Working (v3.2.0):**
+- Verify using Siri Remote (2nd gen or later recommended)
+- Check tvOS 14.0+ installed
+- Try clicking item first, then swiping
+- Restart app if gestures stop responding
+
+**App Crashes on Launch:**
+- Check tvOS version (14.0+ required)
+- Verify iCloud account signed in
+- Try deleting and reinstalling app
+- Check Console logs via Xcode
+
+**Slow Performance:**
+- Reduce number of accessories (HomeKit limit ~150)
+- Check network latency to accessories
+- Restart Apple TV
+- Update tvOS to latest version
+
+**Can't Find Apple TV in Xcode:**
+- Connect via USB-C cable
+- Enable Developer Mode on Apple TV (Settings → Remotes and Devices → Remote App and Devices)
+- Pair Apple TV with Xcode (Window → Devices and Simulators)
+
+---
 
 ## Architecture
 
@@ -142,220 +354,125 @@ Use the Apple TV remote (Siri Remote) to navigate:
 
 ```
 HomeKitTV/
-├── HomeKitTVApp.swift           # App entry point
-├── ContentView.swift            # Tab navigation and main views
-├── HomeKitManager.swift         # HomeKit manager and state
+├── Models/
+│   ├── HomeKitManager.swift         # HomeKit framework integration
+│   ├── RemoteControlManager.swift   # Gesture handling (v3.2.0)
+│   ├── NotificationSystem.swift     # System notifications
+│   └── SettingsManager.swift        # App settings
 ├── Views/
-│   ├── Cards.swift              # Reusable card components
-│   └── DetailViews.swift        # Accessory and room details
-└── Info.plist                   # HomeKit configuration
+│   ├── MainTabView.swift            # Tab navigation
+│   ├── HomeView.swift               # Home overview
+│   ├── RoomsView.swift              # Room grid
+│   ├── ScenesView.swift             # Scene list
+│   ├── AccessoriesView.swift        # All accessories
+│   ├── DetailViews.swift            # Accessory details
+│   ├── EnhancedControls.swift       # Service controls (thermostat, fan, etc.)
+│   ├── AccessoryCard.swift          # Card UI component
+│   └── LoadingView.swift            # Loading states
+├── HomeKitTVApp.swift               # App entry point
+├── Info.plist                       # App configuration
+└── Entitlements.plist               # HomeKit capabilities
 ```
 
 ### Key Components
 
-#### HomeKitManager
-ObservableObject managing all HomeKit state:
-- `primaryHome`: Primary HMHome object
-- `rooms`: Array of HMRoom objects
-- `accessories`: Array of HMAccessory objects
-- `scenes`: Array of HMActionSet objects
-- `isAuthorized`: HomeKit authorization status
-- `isLoading`: Loading state indicator
-- `statusMessage`: User feedback messages
-- Implements HMHomeManagerDelegate
+**HomeKitManager:**
+- Manages HMHomeManager lifecycle
+- Handles accessory discovery
+- Processes state updates
+- Controls accessories
 
-#### View Hierarchy
-```
-TabView (ContentView)
-├── HomeView
-│   ├── SceneCard
-│   └── RoomCard
-├── RoomsView
-│   ├── RoomCard
-│   └── RoomDetailView → AccessoryCard
-├── ScenesView
-│   └── SceneCard
-└── AccessoriesView
-    ├── AccessoryCard
-    └── AccessoryDetailView
-```
+**RemoteControlManager (v3.2.0):**
+- Gesture event handling
+- NotificationCenter integration
+- Memory-safe observer cleanup
 
-#### Card Components (Cards.swift)
-- **AccessoryCard:** Display accessory with power toggle
-- **RoomCard:** Display room with accessory count
-- **SceneCard:** Display and execute scenes
-
-#### Detail Views (DetailViews.swift)
-- **AccessoryDetailView:** Detailed accessory controls
-- **RoomDetailView:** All accessories in a room
-- **BrightnessControl:** Slider for light brightness
-
-### HomeKit Integration
-
-```swift
-class HomeKitManager: NSObject, ObservableObject, HMHomeManagerDelegate {
-    func loadHomeData()
-    func toggleAccessory(_ accessory: HMAccessory)
-    func executeScene(_ scene: HMActionSet)
-    func setBrightness(_ accessory: HMAccessory, brightness: Int)
-}
-```
-
-The manager uses HMHomeManager to access HomeKit data and delegates for real-time updates when accessories change state.
-
-## Configuration
-
-### Info.plist Requirements
-
-```xml
-<key>NSHomeKitUsageDescription</key>
-<string>This app needs access to HomeKit to control your home accessories</string>
-
-<key>UIRequiredDeviceCapabilities</key>
-<array>
-    <string>homekit</string>
-</array>
-
-<key>UIStatusBarHidden</key>
-<false/>
-```
-
-### Entitlements
-
-The app requires HomeKit entitlement:
-1. Target Settings > Signing & Capabilities
-2. Add HomeKit capability
-3. Ensure proper provisioning profile
-
-### Bundle Configuration
-
-- **Bundle ID:** Matches iOS Home app for shared HomeKit data
-- **Version:** 1.0
-- **Deployment Target:** tvOS 14.0
-
-## Building
-
-### Debug Build
-```bash
-xcodebuild -project "HomeKitTV.xcodeproj" -scheme HomeKitTV -configuration Debug -sdk appletvos
-```
-
-### Release Build
-```bash
-xcodebuild -project "HomeKitTV.xcodeproj" -scheme HomeKitTV -configuration Release -sdk appletvos
-```
-
-### Archive for TestFlight
-```bash
-xcodebuild archive -project "HomeKitTV.xcodeproj" -scheme HomeKitTV -archivePath HomeKitTV.xcarchive
-```
-
-## Troubleshooting
-
-### No Accessories Found
-- Verify HomeKit is set up on iPhone/iPad
-- Ensure Apple TV uses same iCloud account
-- Check network connectivity
-- Restart Home Hub (iPad, HomePod, or Apple TV)
-- Force quit and restart HomeKitTV app
-
-### "HomeKit Not Available" Message
-- Sign in to iCloud on Apple TV
-- Enable HomeKit on iOS device
-- Check that Home app works on iOS
-- Verify Apple TV is designated as Home Hub (Settings > Users and Accounts > iCloud)
-
-### Accessories Not Responding
-- Check if accessories respond in iOS Home app
-- Verify accessories are online and powered
-- Restart HomeKit accessories
-- Check Wi-Fi/network connectivity
-- Look for firmware updates for accessories
-
-### Brightness Control Not Working
-- Ensure accessory supports brightness
-- Check if brightness works in iOS Home app
-- Verify accessory has brightness characteristic
-- Try toggling power off and on
-
-### Scenes Not Executing
-- Verify scene exists in iOS Home app
-- Check that all accessories in scene are online
-- Review scene configuration
-- Status message will show error details
-
-### Remote Navigation Issues
-- Ensure focus is properly set
-- Try clicking the Menu button to reset
-- Swipe deliberately between items
-- Check Accessibility settings on Apple TV
-
-### Performance Issues
-- Reduce number of accessories
-- Simplify scenes
-- Check network speed
-- Restart Apple TV
-- Update tvOS to latest version
-
-## Supported Accessories
-
-The app supports all HomeKit-compatible accessories:
-- **Lights:** On/off, brightness control
-- **Outlets:** On/off control
-- **Switches:** On/off control
-- **Thermostats:** Temperature display (control coming soon)
-- **Fans:** On/off, speed control
-- **Locks:** Status display
-- **Sensors:** Status display
-- **Garage Doors:** Status and control
-- **Window Coverings:** Position control
-
-## TV Remote Optimization
-
-The interface is specifically designed for Apple TV remote:
-- Large touch targets (400x300pt cards)
-- Focus-driven navigation
-- Clear visual focus indicators
-- Readable text from 10+ feet away
-- Simplified controls for TV use
-- Grid layouts optimized for remote swiping
-
-## Security & Privacy
-
-- All HomeKit communication is encrypted
-- No data leaves the local network
-- No cloud services or external servers
-- Requires iCloud for HomeKit sync
-- Data shared only within Apple ecosystem
-- User authorization required
-
-## Known Limitations
-
-- Simulator has limited HomeKit functionality
-- Some advanced accessory controls pending
-- Requires iOS device for initial HomeKit setup
-- Apple TV must be on same network as accessories
-- Custom characteristics may not display
-
-## License
-
-Copyright (c) 2025 Jordan Koch
-
-## Version History
-
-- **Version 1.0** (2025)
-  - Initial release
-  - Four-tab interface (Home, Rooms, Scenes, Accessories)
-  - Card-based UI optimized for tvOS
-  - Power control for lights, outlets, switches
-  - Brightness control for lights
-  - Scene execution
-  - Room organization
-  - Detail views for accessories and rooms
-  - Real-time status updates
-  - Loading and empty states
+**EnhancedControls:**
+- ThermostatControlView
+- ColorControlView
+- FanControlView
+- LockControlView
+- WindowCoveringControlView
 
 ---
 
-**Last Updated:** January 22, 2026
+## Development
+
+### Building from Source
+
+```bash
+cd "/Volumes/Data/xcode/HomeKitTV"
+xcodebuild -project "HomeKitTV.xcodeproj" -scheme "HomeKitTV" -configuration Release -destination 'generic/platform=tvOS' build
+```
+
+### Testing on Simulator
+
+```bash
+xcodebuild -project "HomeKitTV.xcodeproj" -scheme "HomeKitTV" -destination 'platform=tvOS Simulator,name=Apple TV' test
+```
+
+### Deployment
+
+```bash
+# Archive for distribution
+xcodebuild archive -project "HomeKitTV.xcodeproj" -scheme "HomeKitTV" -archivePath "build/HomeKitTV.xcarchive"
+
+# Sideload to Apple TV via Xcode Devices window
+```
+
+---
+
+## Version History
+
+### v3.2.0 (January 2026) - Current
+- **Apple TV Remote Gestures**: Full swipe gesture support (up/down/left/right)
+- **Notification-Based Navigation**: App-wide gesture handling
+- **Memory Safety**: Proper NotificationCenter observer cleanup
+- **Improved Scrolling**: Smooth navigation through long lists
+
+### v3.1.0 (2025)
+- **Enhanced Controls**: Thermostat, fan, lock, window covering controls
+- **Color Control**: HSB color picker for color bulbs
+- **Scene Grid**: Improved scene layout
+- **Performance**: Faster accessory loading
+
+### v3.0.0 (2025)
+- **Initial Release**: Full HomeKit control from tvOS
+- **Tab Navigation**: Home, Rooms, Scenes, Accessories
+- **Basic Controls**: Power, brightness for common accessories
+- **Card UI**: TV-optimized interface
+
+---
+
+## License
+
+MIT License
+
+Copyright © 2026 Jordan Koch
+
+---
+
+## Credits
+
+- **Author**: Jordan Koch
+- **Framework**: SwiftUI, HomeKit, tvOS
+- **Platform**: tvOS 14.0+
+- **Language**: Swift 5
+
+---
+
+## Support
+
+**GitHub**: https://github.com/kochj23/HomeKitTV
+
+**For Issues:**
+- Verify HomeKit setup in iOS Home app first
+- Check network connectivity
+- Review Console logs via Xcode
+- Ensure tvOS 14.0+ installed
+
+---
+
+**Last Updated:** January 27, 2026
+**Version:** 3.2.0 (build 320)
 **Status:** ✅ Production Ready
