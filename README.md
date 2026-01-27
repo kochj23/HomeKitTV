@@ -1,6 +1,23 @@
-# HomeKitTV
+# HomeKitTV v3.2.0
 
 A native tvOS application for controlling HomeKit smart home devices from Apple TV, optimized for TV remote navigation.
+
+## 🆕 What's New in v3.2.0 (January 2026)
+
+### Enhanced Apple TV Remote Control
+**Full swipe gesture support for intuitive navigation:**
+
+- **Swipe Up** - Scroll up in current view (notification system integration)
+- **Swipe Down** - Scroll down through accessories and rooms
+- **Swipe Left** - Navigate back or previous item
+- **Swipe Right** - Navigate forward or next item
+- **Notification-Based** - Uses NotificationCenter for app-wide gesture handling
+- **Memory Safe** - Proper observer cleanup to prevent crashes
+
+**Usage:**
+- Natural swipe gestures on Apple TV remote
+- Consistent behavior across all app views
+- Ideal for navigating long lists of accessories
 
 ## Description
 
