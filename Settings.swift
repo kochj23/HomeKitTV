@@ -1,5 +1,6 @@
 import Foundation
 import HomeKit
+import Observation
 
 /// Application settings and preferences manager
 ///
@@ -13,24 +14,30 @@ import HomeKit
 /// **Thread Safety**: All operations are performed on the main thread
 /// **Persistence**: Uses UserDefaults with automatic synchronization
 ///
-/// - Note: This is an ObservableObject to enable reactive UI updates
-class Settings: ObservableObject {
+/// **Migration from ObservableObject (2026-01-31):**
+/// - Replaced `ObservableObject` protocol with `@Observable` macro
+/// - Removed `@Published` property wrappers (automatic observation)
+/// - didSet observers still work for persistence
+///
+/// **Requirements:** iOS 17+, tvOS 17+
+@Observable
+final class Settings {
     // MARK: - Singleton
 
     /// Shared settings instance
     static let shared = Settings()
 
-    // MARK: - Published Properties
+    // MARK: - Observable Properties
 
     /// Array of favorite accessory identifiers (UUIDs as strings)
-    @Published var favoriteAccessoryIDs: Set<String> {
+    var favoriteAccessoryIDs: Set<String> = [] {
         didSet {
             saveFavorites()
         }
     }
 
     /// Array of favorite scene identifiers (UUIDs as strings)
-    @Published var favoriteSceneIDs: Set<String> {
+    var favoriteSceneIDs: Set<String> = [] {
         didSet {
             saveFavorites()
         }
@@ -39,7 +46,7 @@ class Settings: ObservableObject {
     /// Activity history entries (limited to 50 most recent)
     ///
     /// **Memory Safety**: Automatically enforces 50-entry limit to prevent unbounded growth
-    @Published var activityHistory: [ActivityEntry] = [] {
+    var activityHistory: [ActivityEntry] = [] {
         didSet {
             // Enforce retention limit
             if activityHistory.count > 50 {
@@ -50,56 +57,56 @@ class Settings: ObservableObject {
     }
 
     /// Status message duration in seconds
-    @Published var statusMessageDuration: Double {
+    var statusMessageDuration: Double = 3.0 {
         didSet {
             UserDefaults.standard.set(statusMessageDuration, forKey: Keys.statusMessageDuration)
         }
     }
 
     /// Auto-refresh interval in seconds (0 = disabled)
-    @Published var autoRefreshInterval: Double {
+    var autoRefreshInterval: Double = 0 {
         didSet {
             UserDefaults.standard.set(autoRefreshInterval, forKey: Keys.autoRefreshInterval)
         }
     }
 
     /// Show battery levels on accessory cards
-    @Published var showBatteryLevels: Bool {
+    var showBatteryLevels: Bool = true {
         didSet {
             UserDefaults.standard.set(showBatteryLevels, forKey: Keys.showBatteryLevels)
         }
     }
 
     /// Show reachability indicators
-    @Published var showReachabilityIndicators: Bool {
+    var showReachabilityIndicators: Bool = true {
         didSet {
             UserDefaults.standard.set(showReachabilityIndicators, forKey: Keys.showReachabilityIndicators)
         }
     }
 
     /// Font size multiplier (0.8 = Small, 1.0 = Medium, 1.2 = Large, 1.4 = Extra Large)
-    @Published var fontSizeMultiplier: Double {
+    var fontSizeMultiplier: Double = 1.0 {
         didSet {
             UserDefaults.standard.set(fontSizeMultiplier, forKey: Keys.fontSizeMultiplier)
         }
     }
 
     /// Hide unreachable accessories from views
-    @Published var hideUnreachableAccessories: Bool {
+    var hideUnreachableAccessories: Bool = false {
         didSet {
             UserDefaults.standard.set(hideUnreachableAccessories, forKey: Keys.hideUnreachableAccessories)
         }
     }
 
     /// Hide empty rooms (rooms with no accessories)
-    @Published var hideEmptyRooms: Bool {
+    var hideEmptyRooms: Bool = false {
         didSet {
             UserDefaults.standard.set(hideEmptyRooms, forKey: Keys.hideEmptyRooms)
         }
     }
 
     /// Hide empty scenes (scenes with no actions)
-    @Published var hideEmptyScenes: Bool {
+    var hideEmptyScenes: Bool = false {
         didSet {
             UserDefaults.standard.set(hideEmptyScenes, forKey: Keys.hideEmptyScenes)
         }
