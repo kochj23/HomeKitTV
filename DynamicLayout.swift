@@ -1,22 +1,31 @@
 import SwiftUI
 
-/// Dynamic layout calculator for tvOS screens
+/// Dynamic layout calculator for tvOS and iPad screens
 ///
-/// Calculates optimal card sizes and grid layout to fit all content on one screen
-/// without scrolling. Designed for 1920x1080 (Full HD) Apple TV displays.
+/// Calculates optimal card sizes and grid layout to fit content appropriately.
+/// Adapts to different screen sizes:
 ///
 /// **tvOS Screen Dimensions**:
 /// - Full HD: 1920x1080
 /// - Safe area (top): ~60px (status bar)
 /// - Safe area (bottom): ~100px (tab bar)
 /// - Available height: ~920px
-/// - Available width: ~1920px
+///
+/// **iPad Screen Dimensions** (varies by model):
+/// - iPad Pro 12.9": 1024x1366
+/// - iPad Pro 11": 834x1194
+/// - iPad Air/mini: various
 ///
 /// **Memory Safety**: Struct-based, no retain cycles
 struct DynamicLayoutCalculator {
-    /// tvOS safe screen dimensions
-    static let tvSafeWidth: CGFloat = 1920
-    static let tvSafeHeight: CGFloat = 820  // 1080 - 60 (top) - 100 (tab bar) - 100 (buffer)
+    /// Platform-aware safe screen dimensions
+    static var safeWidth: CGFloat {
+        PlatformConstants.safeWidth
+    }
+
+    static var safeHeight: CGFloat {
+        PlatformConstants.safeHeight
+    }
 
     /// Calculate optimal card size based on item count
     /// - Parameters:
@@ -29,13 +38,17 @@ struct DynamicLayoutCalculator {
         itemCount: Int,
         availableWidth: CGFloat,
         availableHeight: CGFloat,
-        headerHeight: CGFloat = 120
+        headerHeight: CGFloat? = nil
     ) -> CGSize {
-        let contentHeight = availableHeight - headerHeight
-        let contentWidth = availableWidth - 120  // 60px padding each side
+        let effectiveHeaderHeight = headerHeight ?? PlatformConstants.headerHeight
+        let contentHeight = availableHeight - effectiveHeaderHeight
+        let padding = PlatformConstants.horizontalPadding * 2
+        let contentWidth = availableWidth - padding
 
         guard itemCount > 0 else {
-            return CGSize(width: 300, height: 200)
+            let defaultWidth = PlatformConstants.isTV ? 300 : 200
+            let defaultHeight = PlatformConstants.isTV ? 200 : 150
+            return CGSize(width: CGFloat(defaultWidth), height: CGFloat(defaultHeight))
         }
 
         // Calculate optimal grid dimensions
@@ -43,15 +56,14 @@ struct DynamicLayoutCalculator {
         let rows = Int(ceil(Double(itemCount) / Double(columns)))
 
         // Calculate card size with spacing
-        let horizontalSpacing: CGFloat = 20
-        let verticalSpacing: CGFloat = 20
+        let spacing = PlatformConstants.gridSpacing
 
-        let cardWidth = (contentWidth - (CGFloat(columns - 1) * horizontalSpacing)) / CGFloat(columns)
-        let cardHeight = (contentHeight - (CGFloat(rows - 1) * verticalSpacing)) / CGFloat(rows)
+        let cardWidth = (contentWidth - (CGFloat(columns - 1) * spacing)) / CGFloat(columns)
+        let cardHeight = (contentHeight - (CGFloat(rows - 1) * spacing)) / CGFloat(rows)
 
-        // Ensure minimum readable size
-        let minWidth: CGFloat = 200
-        let minHeight: CGFloat = 120
+        // Ensure minimum readable size (platform-aware)
+        let minWidth = PlatformConstants.minCardWidth
+        let minHeight: CGFloat = PlatformConstants.isTV ? 120 : 100
 
         return CGSize(
             width: max(minWidth, cardWidth),
@@ -61,13 +73,22 @@ struct DynamicLayoutCalculator {
 
     /// Calculate optimal number of columns based on item count and screen width
     private static func optimalColumns(for itemCount: Int, width: CGFloat) -> Int {
-        switch itemCount {
-        case 0...4: return min(itemCount, 4)
-        case 5...8: return 4
-        case 9...12: return 4
-        case 13...16: return 5
-        case 17...20: return 5
-        default: return 6
+        if PlatformConstants.isTV {
+            // tvOS: fixed column layouts for consistency
+            switch itemCount {
+            case 0...4: return min(itemCount, 4)
+            case 5...8: return 4
+            case 9...12: return 4
+            case 13...16: return 5
+            case 17...20: return 5
+            default: return 6
+            }
+        } else {
+            // iPad: adaptive columns based on screen width
+            let minItemWidth = PlatformConstants.minCardWidth
+            let spacing = PlatformConstants.gridSpacing
+            let maxColumns = Int(width / (minItemWidth + spacing))
+            return max(2, min(maxColumns, itemCount))
         }
     }
 
@@ -75,19 +96,28 @@ struct DynamicLayoutCalculator {
     /// - Parameter cardSize: Size of the card
     /// - Returns: Font scale multiplier
     static func fontScale(for cardSize: CGSize) -> CGFloat {
-        let baseCardSize: CGFloat = 300  // Original card width
+        let baseCardSize: CGFloat = PlatformConstants.isTV ? 300 : 200
         let scale = cardSize.width / baseCardSize
-        return max(0.15, min(scale * 0.25, 0.35))  // Clamp between 0.15x and 0.35x
+
+        if PlatformConstants.isTV {
+            return max(0.15, min(scale * 0.25, 0.35))
+        } else {
+            return max(0.8, min(scale, 1.2))
+        }
     }
 
     /// Calculate grid spacing based on available space
     static func gridSpacing(for availableWidth: CGFloat, columns: Int) -> CGFloat {
-        if columns <= 3 {
-            return 25
-        } else if columns <= 5 {
-            return 20
+        if PlatformConstants.isTV {
+            if columns <= 3 {
+                return 25
+            } else if columns <= 5 {
+                return 20
+            } else {
+                return 15
+            }
         } else {
-            return 15
+            return PlatformConstants.gridSpacing
         }
     }
 }
